@@ -41,16 +41,21 @@
             <span class="t-ja">メールで依頼する（ログイン不要）</span><span class="t-cn">一键发邮件申请（无需登录）</span><span class="t-en">Send Email Request (No Login)</span> ↗
           </a>
         </div>
-                <ul class="owner-spec-list">
+        <ul class="owner-spec-list">
           <li>
-            <span class="t-ja"><b>本人確認</b>：X公式 OAuth 2.0を使用します。本サイトがパスワードを受け取ることはありません</span>
-            <span class="t-cn"><b>本人验证</b>：采用 X 官方 OAuth 2.0，本站不接触密码</span>
-            <span class="t-en"><b>Verification</b>: X's official OAuth 2.0. This site never receives your password</span>
+            <span class="t-ja"><b>認証規格</b>：X OAuth 2.0（PKCE）</span>
+            <span class="t-cn"><b>认证协议</b>：X OAuth 2.0（PKCE）</span>
+            <span class="t-en"><b>Protocol</b>: X OAuth 2.0 (PKCE)</span>
           </li>
           <li>
-            <span class="t-ja"><b>権限範囲</b>：読み取り専用（users.read / tweet.read）のみ。投稿・DMの権限は要求しません。連携は<a href="https://x.com/settings/applications" target="_blank" rel="noopener">連携アプリ管理 ↗</a>からいつでも解除できます</span>
-            <span class="t-cn"><b>权限范围</b>：只读（users.read / tweet.read），不申请发帖或私信权限；关联可随时在<a href="https://x.com/settings/applications" target="_blank" rel="noopener">关联应用管理 ↗</a>解除</span>
-            <span class="t-en"><b>Scope</b>: Read-only (users.read / tweet.read) only; no posting or DM permissions requested. Revocable anytime via <a href="https://x.com/settings/applications" target="_blank" rel="noopener">Connected Apps ↗</a></span>
+            <span class="t-ja"><b>要求スコープ</b>：users.read / tweet.read（本人・権利者確認のみに利用）</span>
+            <span class="t-cn"><b>请求权限</b>：users.read / tweet.read（仅用于身份核验）</span>
+            <span class="t-en"><b>Scopes</b>: users.read / tweet.read (used solely for identity verification)</span>
+          </li>
+          <li>
+            <span class="t-ja"><b>連携の解除</b>：X の<a href="https://x.com/settings/applications" target="_blank" rel="noopener">連携アプリ管理 ↗</a>から取り消せます</span>
+            <span class="t-cn"><b>撤销授权</b>：可通过 X「<a href="https://x.com/settings/applications" target="_blank" rel="noopener">关联应用管理 ↗</a>」随时解除</span>
+            <span class="t-en"><b>Revocation</b>: Available via X <a href="https://x.com/settings/applications" target="_blank" rel="noopener">Connected Apps ↗</a></span>
           </li>
         </ul>
         <div class="gate-btns" style="margin-top:8px;">
@@ -59,9 +64,9 @@
           </button>
         </div>
         <p id="owner-local-hint" style="margin-top:8px;font-size:0.72rem;color:var(--coral-deep);display:none;">
-          <span class="t-ja">※プレビュー環境ではX確認機能は動作しません。公開ページ（example.pages.dev）でご利用ください。</span>
-          <span class="t-cn">※ 预览环境下 X 验证功能不可用，请在公开页面（example.pages.dev）使用。</span>
-          <span class="t-en">※ X verification does not work in the preview environment; please use the public page (example.pages.dev).</span>
+          <span class="t-ja">※プレビュー環境ではX確認機能は動作しません。公開ページ（example.com）でご利用ください。</span>
+          <span class="t-cn">※ 预览环境下 X 验证功能不可用，请在公开页面（example.com）使用。</span>
+          <span class="t-en">※ X verification does not work in the preview environment; please use the public page (example.com).</span>
         </p>
       </div>
 
