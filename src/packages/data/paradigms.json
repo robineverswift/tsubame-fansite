@@ -1,0 +1,48 @@
+[
+ {
+  "label": [
+   "サイトについて",
+   "关于网站",
+   "About the site"
+  ],
+  "items": [
+   {
+    "kind": "request",
+    "label": [
+     "掲載内容の修正をお願いします。（サンプル）",
+     "请修正刊载内容。（示例）",
+     "Please correct the listing. (sample)"
+    ],
+    "text": "掲載内容の修正をお願いします。（サンプル）"
+   },
+   {
+    "kind": "request",
+    "label": [
+     "掲載の取り下げをお願いします。（サンプル）",
+     "请撤下相关内容。（示例）",
+     "Please take the listing down. (sample)"
+    ],
+    "text": "掲載の取り下げをお願いします。（サンプル）"
+   }
+  ]
+ },
+ {
+  "label": [
+   "その他",
+   "其他",
+   "Other"
+  ],
+  "items": [
+   {
+    "kind": "other",
+    "label": [
+     "その他のご連絡（サンプル）",
+     "其他事项（示例）",
+     "Other (sample)"
+    ],
+    "text": "その他のご連絡です。（サンプル）",
+    "isOther": true
+   }
+  ]
+ }
+]

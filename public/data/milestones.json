@@ -1,0 +1,44 @@
+{
+ "flagship": {
+  "id": "sample-flagship",
+  "target_date": "2027-04-01",
+  "active_until": "2027-04-08",
+  "ja": "サンプルマイルストーン",
+  "cn": "示例里程碑",
+  "en": "Sample Milestone"
+ },
+ "milestones": [
+  {
+   "id": "account-anniv",
+   "mmdd": "01-30",
+   "since": 2023,
+   "ja": "アカウント記念日（1月30日）",
+   "cn": "账号周年纪念日（1月30日）",
+   "en": "Account Anniversary (Jan 30)"
+  },
+  {
+   "id": "circle-anniv",
+   "mmdd": "04-01",
+   "since": null,
+   "ja": "自社サークル「つばめいと」記念日（4月1日）",
+   "cn": "自社团「つばめいと」纪念日（4月1日）",
+   "en": "Circle “Tsubameito” Anniversary (Apr 1)"
+  },
+  {
+   "id": "birthday",
+   "mmdd": "10-21",
+   "since": null,
+   "ja": "お誕生日（10月21日）",
+   "cn": "生日纪念（10月21日）",
+   "en": "Birthday (Oct 21)"
+  },
+  {
+   "id": "first-flight",
+   "mmdd": "10-24",
+   "since": null,
+   "ja": "初ソロイベント「FIRST FLIGHT」記念日（10月24日）",
+   "cn": "首次个人活动「FIRST FLIGHT」纪念日（10月24日）",
+   "en": "Solo Event “FIRST FLIGHT” Anniversary (Oct 24)"
+  }
+ ]
+}

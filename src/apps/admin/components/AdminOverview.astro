@@ -1,0 +1,38 @@
+---
+import { CATALOG_META } from "@data/catalog-meta";
+---
+<section class="admin-panel" id="panel-overview" data-module="overview" hidden>
+  <div class="panel-header">
+    <h2><span class="t-ja">収録データの概要</span><span class="t-cn">收录数据概览</span><span class="t-en">Catalog Overview</span></h2>
+    <p>
+      <span class="t-ja">DLsite公開情報の集計と、サイト内データの最新状態です。</span>
+      <span class="t-cn">汇总自 DLsite 公开页面的当前条目状态（只读参照）。</span>
+      <span class="t-en">Read-only totals from DLsite public listings and static dataset freshness.</span>
+    </p>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><div class="num" id="ov-works">—</div><div class="lbl"><span class="t-ja">収録作品（DLsite）</span><span class="t-cn">收录作品（DLsite）</span><span class="t-en">Catalogued works (DLsite)</span></div></div>
+    <div class="tile"><div class="num" id="ov-sales">—</div><div class="lbl"><span class="t-ja">累計販売数</span><span class="t-cn">累计销量</span><span class="t-en">Total sales</span></div></div>
+    <div class="tile"><div class="num" id="ov-upcoming">—</div><div class="lbl"><span class="t-ja">発売予定</span><span class="t-cn">预定发售</span><span class="t-en">Upcoming releases</span></div></div>
+    <div class="tile"><div class="num" id="ov-r18">—</div><div class="lbl"><span class="t-ja">R18 / R-15 / 全年齢</span><span class="t-cn">R18 / R-15 / 全年龄</span><span class="t-en">R18 / R-15 / All-ages</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-subhead">
+      <h3><span class="t-ja">データ状態</span><span class="t-cn">数据文件状态</span><span class="t-en">Dataset Status</span></h3>
+      <button type="button" class="btn mini" id="btn-refresh-health"><span class="t-ja">再確認</span><span class="t-cn">重新检测</span><span class="t-en">Refresh</span></button>
+    </div>
+    <div class="health-grid" id="health-grid">
+      <div class="health-row"><div class="health-left"><span class="health-dot"></span><span class="health-name">stats.json</span></div><span class="health-meta" id="hl-stats">—</span></div>
+      <div class="health-row"><div class="health-left"><span class="health-dot"></span><span class="health-name">upcoming.json</span></div><span class="health-meta" id="hl-upcoming">—</span></div>
+      <div class="health-row"><div class="health-left"><span class="health-dot"></span><span class="health-name">almanac.json</span></div><span class="health-meta" id="hl-almanac">—</span></div>
+      <div class="health-row"><div class="health-left"><span class="health-dot"></span><span class="health-name">on-this-day.json</span></div><span class="health-meta" id="hl-otd">—</span></div>
+    </div>
+    <p class="note" style="margin:12px 0 0">
+      <span class="t-ja">年鑑（今日の記録）：現在{CATALOG_META.almanacDays}日分を収録中（非表示設定や修正のご希望は左のメニューから承ります）。</span>
+      <span class="t-cn">公开页年鉴：当前展示 {CATALOG_META.almanacDays} 天的公开记录（如需隐藏可在「显示设置与源码备份」切换，如需调整可通过「联络信箱」提交）。</span>
+      <span class="t-en">Public Almanac: {CATALOG_META.almanacDays} calendar days listed (visibility toggle is under Visibility &amp; Backup; edits can be requested via Messages).</span>
+    </p>
+  </div>
+</section>

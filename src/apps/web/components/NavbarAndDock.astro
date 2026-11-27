@@ -1,0 +1,87 @@
+<nav aria-label="メインメニュー">
+      <div class="wrap">
+        <a class="brand" href="#" id="brand-home">
+          <svg width="28" height="28" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <defs>
+          <radialGradient id="yslice-nav" cx="42%" cy="38%" r="62%">
+            <stop offset="0%" stop-color="#FFE866"/>
+            <stop offset="68%" stop-color="#FFCA24"/>
+            <stop offset="100%" stop-color="#F2A40C"/>
+          </radialGradient>
+        </defs>
+        <circle cx="32" cy="33" r="28" fill="#F5AE10" stroke="#FFFDF9" stroke-width="2.4"/>
+        <circle cx="32" cy="33" r="23.5" fill="#FFFDF5"/>
+        <circle cx="32" cy="33" r="19.8" fill="url(#yslice-nav)"/>
+        <g stroke="#FFFDF5" stroke-width="2.8" stroke-linecap="round">
+          <line x1="32" y1="12" x2="32" y2="54"/>
+          <line x1="11" y1="33" x2="53" y2="33"/>
+          <line x1="17.2" y1="18.2" x2="46.8" y2="47.8"/>
+          <line x1="46.8" y1="18.2" x2="17.2" y2="47.8"/>
+        </g>
+        <circle cx="32" cy="33" r="4" fill="#FFFDF5"/>
+        <path d="M43 11c5.2-6.8 14-6 17.2 0.2-4.8 5.2-12 5.4-17.2-0.2z" fill="#30BE6E" stroke="#FFFDF9" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+          <span>つばめレコード</span>
+          <span class="brand-tag">非公式</span>
+        </a>
+        <div class="nav-links">
+          <button class="navlink" type="button" data-view="home" aria-current="page">
+            <span class="t-ja">ホーム</span><span class="t-cn">首页</span><span class="t-en">Home</span>
+          </button>
+          <button class="navlink" type="button" data-view="history">
+            <span class="t-ja">活動のあゆみ</span><span class="t-cn">活动年表</span><span class="t-en">History</span>
+          </button>
+          <button class="navlink" type="button" data-view="archive">
+            <span class="t-ja">作品一覧</span><span class="t-cn">作品档案</span><span class="t-en">Archive</span>
+          </button>
+          <button class="navlink" type="button" data-view="about">
+            <span class="t-ja">このサイトについて</span><span class="t-cn">关于本站</span><span class="t-en">About</span>
+          </button>
+        </div>
+        <span class="nav-spacer"></span>
+
+        <!-- Top Sticky Spinning Yuzu BGM Player (Always Visible!) -->
+        <div class="nav-bgm-wrap" id="nav-bgm-wrap">
+          <button type="button" class="nav-bgm-btn" id="bgm-fab-btn" aria-pressed="false" title="クリックでBGMを再生 / 一時停止">
+            <span class="nav-yuzu-disc" aria-hidden="true">
+              <svg width="30" height="30" viewBox="0 0 64 64" fill="none">
+                <circle cx="32" cy="32" r="30" style="fill: var(--coral, #E58156)" stroke="#FFF" stroke-width="2.5"/>
+                <path d="M12 22A22 22 0 0 1 38 10" stroke="rgba(255,255,255,0.78)" stroke-width="3" stroke-linecap="round"/>
+                <path d="M52 42A22 22 0 0 1 26 54" stroke="rgba(255,212,71,0.72)" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="32" cy="32" r="18" fill="#FFD447" stroke="#FFFDF9" stroke-width="2.2"/>
+                <circle cx="32" cy="32" r="14" fill="#FFF7D6"/>
+                <path d="M32 18v28M18 32h28M22.2 22.2l19.6 19.6M41.8 22.2L22.2 41.8" stroke="#FFD447" stroke-width="2.4" stroke-linecap="round"/>
+                <path d="M44 12c5.5-5.5 11.5-4 12.5 0.5-1 4-6.5 6-12.5-0.5z" fill="#3CC48A" stroke="#FFF" stroke-width="1.5"/>
+                <circle cx="32" cy="32" r="4.8" style="fill: var(--coral, #E58156)"/>
+                <circle cx="32" cy="32" r="2" fill="#FFF"/>
+              </svg>
+            </span>
+            <span class="nav-bgm-label" id="bgm-fab-label">BGM</span>
+            <span class="bgm-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+
+        </div>
+
+        <!-- Compact Globe Popover -->
+        <div class="lang-pop-wrap">
+          <button type="button" class="globe-btn" id="lang-btn" aria-expanded="false" aria-label="言語設定 / Language" title="言語切替">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </button>
+          <div class="lang-menu" id="lang-menu" role="menu" hidden>
+            <button type="button" role="menuitemradio" data-lang-opt="ja" aria-checked="true">日本語</button>
+            <button type="button" role="menuitemradio" data-lang-opt="cn" aria-checked="false">中文</button>
+            <button type="button" role="menuitemradio" data-lang-opt="en" aria-checked="false">English</button>
+          </div>
+        </div>
+
+        <a class="official-btn" href="https://example.com/" target="_blank" rel="noopener">
+          <span class="t-ja">公式サイト</span><span class="t-cn">本人官网</span><span class="t-en">Official</span> ↗
+        </a>
+      </div>
+    </nav>
+
+    <!-- ==================== HOME VIEW ==================== -->

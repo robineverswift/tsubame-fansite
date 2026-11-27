@@ -1,0 +1,112 @@
+---
+import { CATALOG_META } from "@data/catalog-meta";
+---
+<div id="view-about" hidden>
+  <main class="wrap arch-wrap">
+    <section class="folder-sec" style="margin-top:0">
+      <div class="folder-tab-row">
+        <div class="folder-tab">
+          <span class="sec-no">01</span>
+          <span class="t-ja">このサイトについて・収録範囲</span>
+          <span class="t-cn">关于本站与收录范围</span>
+          <span class="t-en">About This Archive &amp; Scope</span>
+        </div>
+        <span class="folder-en">SCOPE · DATA · BOUNDARIES</span>
+      </div>
+      <div class="folder-body">
+        <p class="sec-lede">
+          <span class="t-ja">本サイトは、声優・[アーティスト名]の作品および活動に関する公開情報を記録する、非公式・非営利の個人アーカイブです。ご本人様および各関係団体とは一切関係ありません。</span>
+          <span class="t-cn">本站为非官方、非营利的个人档案站，记录声优[アーティスト名]的作品与活动之公开信息，与[アーティスト名]本人及各相关团体无任何所属或合作关系。</span>
+          <span class="t-en">This site is an unofficial, non-profit personal archive of public information on the works and activities of voice actress [ARTIST NAME]. It is not affiliated with her or with any related organisation.</span>
+        </p>
+
+        <div class="about-grid">
+          <div class="sub-card about-card">
+            <h3>
+              <span class="t-ja">収録範囲とデータの扱い</span>
+              <span class="t-cn">收录范围与统计口径</span>
+              <span class="t-en">Coverage &amp; Metric Rules</span>
+            </h3>
+            <ul class="about-list">
+              <li>
+                <span class="t-ja"><b>DLsite 公開作品が中心</b>：本編アーカイブは現在 <b class="works-total-cnt">{CATALOG_META.worksTotalFormatted}</b> 作・<b class="circles-total-cnt">{CATALOG_META.circlesTotalFormatted}</b> サークルの DLsite 公開情報をもとに自動集計しています（FANZA 独占作品は別枠の「ANNEX」として分けて掲載し、合算しません）。</span>
+                <span class="t-cn"><b>以 DLsite 公开页为主库</b>：主档案当前依据 DLsite 公开页自动统计 <b class="works-total-cnt">{CATALOG_META.worksTotalFormatted}</b> 部作品、<b>{CATALOG_META.circlesTotalFormatted}</b> 个社团；FANZA 等平台独占作品单独放在附表「ANNEX」，绝不混入主总数。</span>
+                <span class="t-en"><b>DLsite Main Scope</b>: Currently tracks <b class="works-total-cnt">{CATALOG_META.worksTotalFormatted}</b> works across <b>{CATALOG_META.circlesTotalFormatted}</b> circles from public DLsite listings (FANZA exclusives stay isolated in the Annex).</span>
+              </li>
+              <li>
+                <span class="t-ja"><b>数値の基準</b>：作品ごとの販売数は、合算表記ではなく原本作品ページの掲載数値をそのまま記録しています。</span>
+                <span class="t-cn"><b>销量口径</b>：作品销量仅按各自原始版本的公开页面数值记录，不混用跨版本合计数。</span>
+                <span class="t-en"><b>Sales Basis</b>: Per-work counts reflect the original edition’s public figure without blending editions.</span>
+              </li>
+              <li>
+                <span class="t-ja"><b>公開情報のみ・年齢配慮</b>：掲載内容は、公式に公開された作品情報と、ご本人様が公開された発言・記録に基づきます。非公開の情報源は用いません。初期表示は全年齢・R-15 作品のみで、R18 作品は年齢確認のうえ書誌情報のみを表示し、ジャケット画像は掲載しません。</span>
+                <span class="t-cn"><b>仅限公开信息与分级考量</b>：本站内容以官方公开的作品信息，及本人公开发布的发言与记录为据。不采用任何非公开来源。档案页默认仅展示全年龄与 R-15；R18 条目需确认年龄且仅显示书目文本，不放封面图。</span>
+                <span class="t-en"><b>Public Info &amp; Age Care</b>: Content is based on officially published work information and on statements and records she has made public. No non-public sources are used. Archive opens on all-ages &amp; R-15; R18 requires confirmation and renders text records only, with zero cover art.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sub-card about-card">
+            <h3>
+              <span class="t-ja">権利関係・権利者様への対応方針</span>
+              <span class="t-cn">权利归属与权利人方针</span>
+              <span class="t-en">Rights &amp; Rights-Holder Policy</span>
+            </h3>
+            <ul class="about-list">
+              <li>
+                <span class="t-ja">掲載している作品情報・各種名称の権利は、すべてご本人様および各サークル・制作元・権利者様に帰属します。作品の購入・再生は必ず公式窓口をご利用ください。</span>
+                <span class="t-cn">页面所载全部作品信息与名称的相关权利均归[アーティスト名]本人及各社团、发行方、权利人所有。请始终通过官方渠道支持与购买作品。</span>
+                <span class="t-en">All rights belong to [ARTIST NAME] and respective circles or publishers. Always support releases through official storefronts.</span>
+              </li>
+              <li>
+                <span class="t-ja"><b>権利者様のご意思を尊重します</b>：ご本人様および各サークル・制作元・権利者様は、ご自身の権利に関わる範囲で、いつでも内容の確認・修正・削除ならびに公開の停止をご依頼いただけます。ご依頼に基づき、該当内容の修正・削除または公開の停止を行います。</span>
+                <span class="t-cn"><b>尊重权利人的意愿</b>：本人及各社团、制作方、权利人，可就其自身权利所涉范围，随时要求确认、修正、删除内容或停止公开。本站将根据请求，对相关内容进行修正、删除或停止公开。</span>
+                <span class="t-en"><b>Respect for Rights Holders</b>: [ARTIST NAME] and each circle, producer and rights holder may, within the scope of their own rights, request review, correction, removal of content or suspension of publication at any time. Upon request, the relevant content will be corrected, removed, or unpublished.</span>
+              </li>
+            </ul>
+            <div class="about-actions">
+              <button type="button" class="btn btn-primary" data-open-owner-modal>
+                <span class="t-ja">ご本人様・関係者様窓口を開く</span>
+                <span class="t-cn">打开本人及权利人联络窗口</span>
+                <span class="t-en">Open Rights &amp; Artist Inquiry</span>
+              </button>
+              <a class="btn btn-soft" href="https://example.com/" target="_blank" rel="noopener">
+                <span class="t-ja">公式ウェブサイト ↗</span>
+                <span class="t-cn">前往官方网站 ↗</span>
+                <span class="t-en">Official Website ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="folder-sec">
+      <div class="folder-tab-row">
+        <div class="folder-tab">
+          <span class="sec-no">02</span>
+          <span class="t-ja">サイト仕様・現在の版</span>
+          <span class="t-cn">站点说明与当前版本</span>
+          <span class="t-en">Site Notes &amp; Build</span>
+        </div>
+        <span class="folder-en">NOTES · SNAPSHOT</span>
+      </div>
+      <div class="folder-body">
+        <div class="about-notes-grid">
+          <div class="about-note-item">
+            <strong>Current Build</strong>
+            <span>Version: {CATALOG_META.version} · Snapshot: {CATALOG_META.snapshotDate}</span>
+          </div>
+          <div class="about-note-item">
+            <strong>Architecture</strong>
+            <span>Astro (static build) · Cloudflare Pages · Data: static JSON + Cloudflare KV</span>
+          </div>
+          <div class="about-note-item">
+            <strong>Development &amp; Versioning</strong>
+            <span>Source: GitHub · Commit-based history · SemVer</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

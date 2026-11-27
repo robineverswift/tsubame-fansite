@@ -1,0 +1,98 @@
+<section class="folder-sec" id="news">
+          <div class="folder-tab-row">
+            <div class="folder-tab">
+              <span class="sec-no">02</span>
+              <span class="t-ja">最新のお知らせ＆公式動画</span>
+              <span class="t-cn">最新动态与官方视频</span>
+              <span class="t-en">Latest News &amp; YouTube</span>
+            </div>
+            <span class="folder-en">Countdown &amp; Official Stream</span>
+          </div>
+          <div class="folder-body">
+            <!-- Resident Flagship Anchor: 2026-12-10 Commissions Reopening -->
+            <div class="countdown-card countdown-flagship" id="flagship-countdown" role="region" aria-label="コミッション受付再開カウントダウン">
+              <div class="cd-info">
+                <span class="yuzu-badge" id="cd-flagship-badge"><span class="t-ja">◆ 受注再開予定 · COMMISSIONS</span><span class="t-cn">◆ 委托重启预告 · COMMISSIONS</span><span class="t-en">◆ COMMISSIONS REOPENING</span></span>
+                <h2 class="cd-title" id="cd-flagship-title">
+                  <span class="t-ja">コミッション受付 再開まで</span>
+                  <span class="t-cn">个人委托受理重启倒计时</span>
+                  <span class="t-en">Commission Reopening Countdown</span>
+                </h2>
+                <p class="cd-desc" id="cd-flagship-desc">
+                  <span class="t-ja">ご依頼・Skeb等の受付は <b>2026年12月10日 20:00（JST）</b> 再開予定（収録時期：2027年4月〜7月予定）。</span>
+                  <span class="t-cn">个人语音委托与 Skeb 预计于 <b>2026 年 12 月 10 日 20:00（JST）</b> 重启受理（录音期：2027 年 4–7 月）。</span>
+                  <span class="t-en">Voice commissions &amp; Skeb reopen on <b>Dec 10, 2026 at 20:00 JST</b> (recording window: Apr–Jul 2027).</span>
+                </p>
+              </div>
+              <div class="cd-capsules">
+                <div class="cd-box"><div class="v" id="cd-d">–</div><div class="u">DAYS</div></div>
+                <div class="cd-box"><div class="v" id="cd-h">–</div><div class="u">HRS</div></div>
+                <div class="cd-box"><div class="v" id="cd-m">–</div><div class="u">MIN</div></div>
+                <div class="cd-box"><div class="v" id="cd-s">–</div><div class="u">SEC</div></div>
+              </div>
+            </div>
+
+            <!-- Track 1: Uniform 2x2 Paged Carousel (Official 16:9 YouTube Videos Only — Zero Tab-Switch Layout Jump) -->
+            <div class="news-flow-stage" id="news-flow-stage" aria-label="公式 YouTube 動画カルーセル">
+              <div class="shorts-shelf-head">
+                <span class="shorts-shelf-title">
+                  <span class="shorts-shelf-mark" aria-hidden="true">▶</span>
+                  <span class="t-ja">公式 YouTube 動画</span>
+                  <span class="t-cn">官方 YouTube 视频</span>
+                  <span class="t-en">Official YouTube Videos</span>
+                </span>
+                <span class="shorts-shelf-sub">OFFICIAL VIDEOS</span>
+              </div>
+
+              <div class="flow-viewport" id="flow-viewport">
+                <div class="flow-track" id="flow-track"></div>
+              </div>
+
+              <div class="flow-dots" id="flow-dots" aria-label="ページ切替"></div>
+            </div>
+
+            <!-- Track 2: Dedicated YouTube-Style 4-Column Vertical Shorts Shelf (Independent Flip, Zero Height Jump) -->
+            <div class="shorts-shelf-stage" id="shorts-shelf-stage" aria-label="公式 YouTube Shorts" hidden>
+              <div class="shorts-shelf-head">
+                <span class="shorts-shelf-title">
+                  <span class="shorts-shelf-mark" aria-hidden="true">▶</span>
+                  <span class="t-ja">公式 YouTube Shorts</span>
+                  <span class="t-cn">官方 YouTube Shorts</span>
+                  <span class="t-en">Official YouTube Shorts</span>
+                </span>
+                <span class="shorts-shelf-sub">VERTICAL CLIPS</span>
+              </div>
+              <div class="flow-viewport" id="shorts-viewport">
+                <div class="flow-track is-shorts-shelf" id="shorts-track"></div>
+              </div>
+              <div class="flow-dots" id="shorts-dots" aria-label="Shorts ページ切替"></div>
+            </div>
+
+            <!-- v3.0.5.0 Official YouTube Lite-Embed Lightbox (controlled by /admin flag external_youtube_only) -->
+            <div class="yt-lightbox" id="yt-lightbox" role="dialog" aria-modal="true" aria-labelledby="yt-lb-title" hidden>
+              <div class="yt-lb-card" id="yt-lb-card">
+                <div class="yt-lb-head">
+                  <div class="yt-lb-title" id="yt-lb-title"></div>
+                  <button type="button" class="yt-lb-close" id="yt-lb-close" aria-label="閉じる">×</button>
+                </div>
+                <div class="yt-lb-frame-wrap" id="yt-lb-frame-wrap">
+                  <iframe id="yt-lb-iframe" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="yt-lb-foot">
+                  <a class="yt-lb-ext" id="yt-lb-ext" href="#" target="_blank" rel="noopener">
+                    <span class="t-ja">YouTubeで見る ↗</span>
+                    <span class="t-cn">前往 YouTube 观看 ↗</span>
+                    <span class="t-en">Watch on YouTube ↗</span>
+                  </a>
+                  <span class="yt-lb-note">
+                    <span class="t-ja">公式プレイヤーで再生中です。再生数はつばめさんの公式チャンネルに届きます。</span>
+                    <span class="t-cn">正在通过官方播放器播放，播放量将计入[アーティスト名]的官方频道。</span>
+                    <span class="t-en">Playing in the official player — every view counts toward [ARTIST NAME]’s official channel.</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== CENTERPIECE #2: "WE REMEMBER" 10-YEAR DIAL & HEATMAP ==================== -->

@@ -1,0 +1,83 @@
+<section class="folder-sec" id="stats">
+  <div class="folder-tab-row">
+    <div class="folder-tab">
+      <span class="sec-no">02</span>
+      <span class="t-ja">リリースの記録＆共演サークル</span>
+      <span class="t-cn">发行节奏与共演社团</span>
+      <span class="t-en">Releases &amp; Collaborators</span>
+    </div>
+    <span class="folder-en">2017–2026 · Public Release Index</span>
+  </div>
+  <div class="folder-body">
+    <p class="sec-lede">
+      <span class="t-ja">DLsiteの公開ページをもとに、年別・月別の作品公開ペースと主な共演サークルをまとめています。気になる年やサークルを押すと、そのまま一覧で絞り込めます。</span>
+      <span class="t-cn">根据 DLsite 公开页面的记载，整理了各年各月的发布节奏与主要共演社团。点击任一年份或社团名，即可跳转到对应作品列表。</span>
+      <span class="t-en">A chronological index built from public DLsite listings — showing release pacing by month and frequent collaborating circles. Tap any year or circle to filter in the archive.</span>
+    </p>
+
+    <div class="stats-suite" style="margin-top:0">
+      <div class="sub-card stats-card-constellation">
+        <div class="stats-card-head">
+          <div class="stats-head-titles">
+            <h3>
+              <span class="t-ja">月別・年別リリースの記録</span>
+              <span class="t-cn">按月与按年的发行记录</span>
+              <span class="t-en">Releases by Month and Year</span>
+            </h3>
+            <p class="stats-head-sub">
+              <span class="t-ja">月ごとの公開本数と推移の一覧です。年やマスを押すと該当年のアーカイブへ移動します。</span>
+              <span class="t-cn">各月公开发布数量与年度分布，点击年份或格子可直达对应作品档案。</span>
+              <span class="t-en">Monthly cadence and annual totals — click any year or cell to filter.</span>
+            </p>
+          </div>
+          <div class="stats-kpi-strip" id="stats-kpi-strip" aria-live="polite"></div>
+        </div>
+        <div class="heat-legend" aria-hidden="true">
+          <span class="hl-label"><span class="t-ja">少</span><span class="t-cn">少</span><span class="t-en">Less</span></span>
+          <span class="hl-sw" data-l="0" title="0"></span>
+          <span class="hl-sw" data-l="1" title="1–6"></span>
+          <span class="hl-sw" data-l="2" title="7–14"></span>
+          <span class="hl-sw" data-l="3" title="15–21"></span>
+          <span class="hl-sw" data-l="4" title="22+"></span>
+          <span class="hl-label"><span class="t-ja">多</span><span class="t-cn">多</span><span class="t-en">More</span></span>
+          <span class="hl-sep">·</span>
+          <span class="hl-peak"><span class="hl-star">★</span> <span class="t-ja">最多の年</span><span class="t-cn">发行最多的一年</span><span class="t-en">Most Releases</span></span>
+        </div>
+        <div class="heat-desktop">
+          <div class="heat-wrap"><div class="heat heat-unified" id="heatmap"></div></div>
+        </div>
+        <div class="heat-mobile">
+          <div class="hm-year-list" id="heatmap-mobile"></div>
+          <p class="stats-footnote">
+            <span class="t-ja">年をタップすると12ヶ月別の詳細が展開されます。</span>
+            <span class="t-cn">点击任意年份即可展开该年 12 个月明细。</span>
+            <span class="t-en">Tap any year to expand its 12-month breakdown.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="sub-card stats-card-circles">
+        <div class="stats-card-head">
+          <div class="stats-head-titles">
+            <h3>
+              <span class="t-ja">主な共演サークル TOP10</span>
+              <span class="t-cn">主要合作社团 TOP10</span>
+              <span class="t-en">Frequent Collaborating Circles (Top 10)</span>
+            </h3>
+            <p class="stats-head-sub">
+              <span class="t-ja">DLsiteの公開情報をもとに集計した共演回数の上位10サークルです。</span>
+              <span class="t-cn">依据 DLsite 公开信息整理出的合作次数前十社团。</span>
+              <span class="t-en">The ten most frequent collaborating circles in public DLsite listings.</span>
+            </p>
+          </div>
+        </div>
+        <div class="circles-grid" id="circles-list"></div>
+        <p class="stats-footnote">
+          <span class="t-ja">サークル名をタップするとアーカイブで絞り込めます。</span>
+          <span class="t-cn">点击任意社团名即可直接筛选该社团作品。</span>
+          <span class="t-en">Tap any circle to filter its works in the archive.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

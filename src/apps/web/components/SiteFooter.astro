@@ -1,0 +1,41 @@
+---
+import { CATALOG_META } from "@data/catalog-meta";
+---
+<footer>
+      <div class="wrap">
+        <div class="foot-brand-row">
+          <svg width="22" height="22" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <defs>
+          <radialGradient id="yslice-foot" cx="42%" cy="38%" r="62%">
+            <stop offset="0%" stop-color="#FFE866"/>
+            <stop offset="68%" stop-color="#FFCA24"/>
+            <stop offset="100%" stop-color="#F2A40C"/>
+          </radialGradient>
+        </defs>
+        <circle cx="32" cy="33" r="28" fill="#F5AE10" stroke="#D68400" stroke-width="2"/>
+        <circle cx="32" cy="33" r="23.5" fill="#FFFDF5"/>
+        <circle cx="32" cy="33" r="19.8" fill="url(#yslice-foot)"/>
+        <g stroke="#FFFDF5" stroke-width="2.8" stroke-linecap="round">
+          <line x1="32" y1="12" x2="32" y2="54"/>
+          <line x1="11" y1="33" x2="53" y2="33"/>
+          <line x1="17.2" y1="18.2" x2="46.8" y2="47.8"/>
+          <line x1="46.8" y1="18.2" x2="17.2" y2="47.8"/>
+        </g>
+        <circle cx="32" cy="33" r="4" fill="#FFFDF5"/>
+        <path d="M43 11c5.2-6.8 14-6 17.2 0.2-4.8 5.2-12 5.4-17.2-0.2z" fill="#30BE6E" stroke="#D68400" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+          <span class="foot-badge"><span class="t-ja">つばめレコード</span><span class="t-cn">つばめレコード</span><span class="t-en">Tsubame Record</span></span>
+        </div>
+        <p class="foot-quiet-line">
+          <span class="t-ja">公式サイト：<a href="https://example.com/" target="_blank" rel="noopener">example.com</a></span>
+          <span class="t-cn">官方网站：<a href="https://example.com/" target="_blank" rel="noopener">example.com</a></span>
+          <span class="t-en">Official Site: <a href="https://example.com/" target="_blank" rel="noopener">example.com</a></span>
+        </p>
+        <p class="foot-quiet-line">
+          <span class="t-ja">本サイトの掲載情報は各公式公開ページに基づくもので、関連する権利は各権利者に帰属します。</span>
+          <span class="t-cn">本站所载信息均取自各官方公开页面，相关权利归各权利人所有。</span>
+          <span class="t-en">The information listed on this site is based on official public pages, and all related rights belong to their respective holders.</span>
+        </p>
+        <p class="src">TSUBAME RECORD {CATALOG_META.version}</p>
+      </div>
+    </footer>

@@ -1,0 +1,66 @@
+---
+import "@ui/styles/web.css";
+import { CATALOG_META } from "@data/catalog-meta";
+import SplashSoundGate from "@web/components/SplashSoundGate.astro";
+import NavbarAndDock from "@web/components/NavbarAndDock.astro";
+import HeroSection from "@web/components/HeroSection.astro";
+import Section02Channels from "@web/components/Section02Channels.astro";
+import Section03NewsVideo from "@web/components/Section03NewsVideo.astro";
+import HistoryView from "@web/components/HistoryView.astro";
+import ArchiveView from "@web/components/ArchiveView.astro";
+import AboutView from "@web/components/AboutView.astro";
+import SiteFooter from "@web/components/SiteFooter.astro";
+import ModalsAndOverlays from "@web/components/ModalsAndOverlays.astro";
+---
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#E08D03" />
+  <script is:inline>
+    (function () {
+      try {
+        var t = localStorage.getItem("site_theme");
+        if (t === "midori") {
+          t = "yuzu";
+          try { localStorage.setItem("site_theme", "yuzu"); } catch (e3) {}
+        }
+        var th = (t === "coral" || t === "yuzu") ? t : "yuzu";
+        document.documentElement.dataset.theme = th;
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", th === "coral" ? "#E8536B" : "#E08D03");
+      } catch (e) {
+        document.documentElement.dataset.theme = "yuzu";
+      }
+    })();
+  </script>
+  <title>つばめレコード — [アーティスト名] 非公式・声と活動の記録</title>
+  <meta name="description" content={`つばめレコード — 声優・[アーティスト名]の作品および活動に関する公開情報を記録する、非公式・非営利の個人アーカイブ。2017年からDLsiteに掲載された出演作品 ${CATALOG_META.worksTotalFormatted} 作を収録。`} />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/yuzu-icon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/yuzu-icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/yuzu-icon-180.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=M+PLUS+Rounded+1c:wght@500;700;800&family=Noto+Sans+SC:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet" />
+</head>
+<body data-lang="ja">
+  <SplashSoundGate />
+  <div class="page-shell">
+    <NavbarAndDock />
+    <div id="view-home">
+      <HeroSection />
+      <main class="wrap">
+        <Section02Channels />
+        <Section03NewsVideo />
+      </main>
+    </div>
+    <HistoryView />
+    <ArchiveView />
+    <AboutView />
+    <SiteFooter />
+  </div>
+  <ModalsAndOverlays />
+  <script is:inline src={`/scripts/web-client.js?v=${CATALOG_META.version}`}></script>
+</body>
+</html>

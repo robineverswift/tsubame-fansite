@@ -1,0 +1,21 @@
+{
+  "name": "tsubame-fansite",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "node scripts/build-on-this-day.mjs && node scripts/build-theme-birds.mjs && astro build && node scripts/build-source-bundle.mjs",
+    "preview": "astro preview",
+    "check": "astro check",
+    "bundle:source": "node scripts/build-source-bundle.mjs",
+    "sync:dlsite": "node scripts/sync-dlsite.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.7.2"
+  }
+}

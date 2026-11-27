@@ -1,0 +1,72 @@
+---
+import { CATALOG_META } from "@data/catalog-meta";
+---
+<header class="hero">
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
+                <div class="wrap">
+          <div class="owner-notice-banner" id="owner-notice-banner" hidden role="status">
+            <span class="onb-pill">
+              <span class="t-ja">お知らせ</span><span class="t-cn">公告</span><span class="t-en">NOTICE</span>
+            </span>
+            <span class="onb-text" id="owner-notice-text"></span>
+          </div>
+          <div class="hero-card">
+            <div class="hero-top-row">
+              <span class="hero-pill">
+                <span class="t-ja">非公式ファンサイト</span><span class="t-cn">非官方粉丝站</span><span class="t-en">UNOFFICIAL FAN SITE</span>
+              </span>
+              <button type="button" class="swallow-seal-btn" id="swallow-btn" title="クリックでつばめ（🐦💨）が飛び、テーマカラーが切り替わります！">
+                <span class="noto-bird-pair" aria-hidden="true"><img id="swallow-btn-bird" src="/assets/brand/noto-bird-theme-coral.webp" alt="" width="23" height="23" style="display:block;object-fit:contain;"><img src="/assets/brand/noto-puff-fb0b3b19.webp" alt="" width="20" height="20" style="display:block;object-fit:contain;margin-left:-1px;"></span></button>
+                <script is:inline>
+                  (function () {
+                    try {
+                      var t = document.documentElement.dataset.theme;
+                      var nxt = t === "coral" ? "yuzu" : "coral";
+                      var b = document.getElementById("swallow-btn-bird");
+                      if (b) b.setAttribute("src", "/assets/brand/noto-bird-theme-" + nxt + ".webp");
+                    } catch (e) {}
+                  })();
+                </script>
+            </div>
+
+            <div class="hero-grid">
+              <div>
+                <h1 class="hero-compare-heading">
+                  <span class="sr-only">つばめレコード（TSUBAME RECORD）— 声優・[アーティスト名] 非公式ファンサイト</span>
+                  <button type="button" id="hero-logo-switcher" class="logo-switch-stage" title="つばめレコード — TSUBAME RECORD">
+                    <img class="logo-switch-img" src="/assets/media/tsubame-fansite-wordmark.webp" alt="つばめレコード TSUBAME RECORD" width="1463" height="463" decoding="async" />
+                  </button>
+                </h1>
+                <p class="hero-desc">
+                  <span class="t-ja">声優・[アーティスト名]の出演作品と活動に関する公開情報を記録する、非公式ファンのアーカイブです。</span>
+                  <span class="t-cn">这里是非官方粉丝档案，记录声优[アーティスト名]出演作品与活动的相关公开信息。</span>
+                  <span class="t-en">An unofficial fan archive recording voice actress [ARTIST NAME]'s works and activities from public sources.</span>
+                </p>
+
+                                <div class="hero-ornament-divider" aria-hidden="true">
+                  <span></span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z" fill="#FFD447" style="stroke: var(--coral, #E58156)" stroke-width="1.2"/></svg>
+                  <span></span>
+                </div>
+
+                <div class="hero-stats">
+                  <div class="stat-pill"><div class="num"><span id="hero-works-count" data-count={String(CATALOG_META.worksTotal)}>0</span></div><div class="lab"><span class="t-ja">DLsite収録作品</span><span class="t-cn">DLsite 收录作品</span><span class="t-en">Works (DLsite)</span></div></div>
+                  <div class="stat-pill"><div class="num">2017<em>–</em>2026</div><div class="lab"><span class="t-ja">活動期間</span><span class="t-cn">活动期间</span><span class="t-en">Active Years</span></div></div>
+                  <div class="stat-pill"><div class="num"><span id="hero-circles-count" data-count={String(CATALOG_META.circlesTotal)}>0</span></div><div class="lab"><span class="t-ja">共演サークル</span><span class="t-cn">合作社团</span><span class="t-en">Circles</span></div></div>
+                  <div class="stat-pill"><div class="num">★ {CATALOG_META.avgRatingFormatted}</div><div class="lab"><span class="t-ja">平均評価</span><span class="t-cn">平均评分</span><span class="t-en">Avg Rating</span></div></div>
+                </div>
+
+                <div class="hero-cta">
+                  <button class="btn btn-primary" type="button" data-view="archive">
+                    <span class="t-ja">出演作品一覧を見る</span><span class="t-cn">浏览 <span data-works-total-text>{CATALOG_META.worksTotalFormatted}</span> 部作品档案</span><span class="t-en">Browse <span data-works-total-text>{CATALOG_META.worksTotalFormatted}</span> Works</span> →
+                  </button>
+                  <button class="btn btn-yuzu" type="button" data-view="history">
+                    <span class="t-ja">活動のあゆみを見る</span><span class="t-cn">查看活动年表</span><span class="t-en">Activity History</span> →
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </header>

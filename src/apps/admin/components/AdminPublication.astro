@@ -1,0 +1,47 @@
+<section class="admin-panel" id="panel-publication" data-module="publication">
+  <div class="panel-header">
+    <h2><span class="t-ja">公開状態・連絡先</span><span class="t-cn">网站公开状态与联系方式</span><span class="t-en">Site Status &amp; Contact</span></h2>
+    <p>
+      <span class="t-ja">サイト全体の公開停止・再開はこの画面で行います。</span>
+      <span class="t-cn">本站的停站与重新公开在此操作。</span>
+      <span class="t-en">Site suspension and reopening are controlled on this page.</span>
+    </p>
+  </div>
+
+  <div class="card danger-zone pub-hero-card">
+    <div class="card-subhead">
+      <h3>
+        <span class="t-ja">サイトの公開状態</span><span class="t-cn">网站公开状态</span><span class="t-en">Site Publication</span>
+      </h3>
+      <div class="pub-pills">
+        <span class="tag-pill is-mint" id="pub-status-pill">—</span>
+        <span class="tag-pill">
+          <span class="t-ja">誤操作防止・2回押し</span><span class="t-cn">防误触・需按两次</span><span class="t-en">Two-press safety</span>
+        </span>
+      </div>
+    </div>
+    <p class="note">
+      <span class="t-ja">「サイトを閉じる」を押すと、公開ページがすべて公式サイトへ転送され、本サイトは見えなくなります。このページだけは残るので、あとから再開することもできます。</span>
+      <span class="t-cn">按下「关闭网站」后，所有公开页面都会自动跳转到官方网站，本站不再可见。只有这个窗口页会保留，需要时可重新打开。</span>
+      <span class="t-en">Closing the site redirects every public page to the official website. This window remains accessible if you ever wish to reopen it.</span>
+    </p>
+    <div class="row">
+      <button type="button" class="btn btn-danger" id="btn-close-site"><span class="t-ja">サイトを閉じる</span><span class="t-cn">关闭网站</span><span class="t-en">Close the site</span></button>
+      <button type="button" class="btn" id="btn-open-site"><span class="t-ja">サイトを再開する</span><span class="t-cn">重新打开网站</span><span class="t-en">Reopen the site</span></button>
+    </div>
+    <p class="status" id="status-site"></p>
+  </div>
+
+  <div class="card" id="direct-card" hidden>
+    <div class="card-subhead">
+      <h3><span class="t-ja">連絡先</span><span class="t-cn">联系方式</span><span class="t-en">Contact</span></h3>
+      
+    </div>
+    <p class="note">
+      <span class="t-ja">本サイトの連絡先は下記のサイト専用アドレスです。</span>
+      <span class="t-cn">本站联系方式为下方站点专用邮箱。</span>
+      <span class="t-en">The contact address for this site is the site address below.</span>
+    </p>
+    <p style="margin:0"><a class="direct-email-link" id="direct-link" href="mailto:contact@example.com">contact@example.com</a></p>
+  </div>
+</section>

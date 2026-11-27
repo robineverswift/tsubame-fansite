@@ -1,0 +1,104 @@
+---
+import { CATALOG_META } from "@data/catalog-meta";
+---
+<div id="view-archive" hidden>
+      <main class="wrap arch-wrap">
+        <div class="arch-tabs-bar">
+          <div class="scope-tabs" role="group" aria-label="表示範囲の切り替え">
+            <button type="button" class="scope-tab" id="seg-gen" aria-pressed="true">
+              <span class="t-ja">全年齢・R-15</span><span class="t-cn">全年龄・R-15</span><span class="t-en">All-Ages &amp; R-15</span>
+              <span class="cnt">{CATALOG_META.nonR18TotalFormatted}</span>
+            </button>
+            <button type="button" class="scope-tab" id="seg-all" aria-pressed="false">
+              <span class="t-ja">R18を含む</span><span class="t-cn">包含 R18</span><span class="t-en">Include R18</span>
+              <span class="cnt">{CATALOG_META.worksTotalFormatted}</span>
+            </button>
+          </div>
+          <span class="folder-en">WORKS ARCHIVE · DLsite収録 <span class="works-total-cnt">{CATALOG_META.worksTotalFormatted}</span>作</span>
+        </div>
+
+        <div class="folder-body">
+          <p class="sec-lede" style="margin-bottom:16px;">
+            <span class="t-ja">DLsiteで公開されている出演作品の記録です。はじめは全年齢・R-15作品だけを表示し、R18作品は書誌情報のみ載せています（ジャケット画像はありません）。収録はDLsite掲載分のみで、全作品を網羅したものではありません。お気づきの点がありましたら、「このサイトについて」ページの窓口からいつでもご連絡いただけます。</span>
+            <span class="t-cn">DLsite 公开页面上的出演作品，一部一部记在这里。默认只显示全年龄与 R-15；R18 只列书目信息，不放封面图。收录仅限 DLsite，并不是她的全部作品。若有任何发现，可随时通过「关于本站」页面的窗口联系。</span>
+            <span class="t-en">Her DLsite-listed works, recorded one entry at a time. The archive opens on all-ages and R-15 titles only; R18 entries appear as text records, without cover art. Coverage is DLsite only — not her complete body of work. Anything amiss can be raised anytime through the contact window on the About page.</span>
+          </p>
+
+          <div class="arch-controls">
+            <div>
+              <label for="f-q"><span class="t-ja">キーワード検索</span><span class="t-cn">关键词搜索</span><span class="t-en">Keyword</span></label>
+              <input id="f-q" type="search" placeholder="タイトル・サークル・RJ番号・タグ…" autocomplete="off" />
+            </div>
+            <div>
+              <label for="f-year"><span class="t-ja">発売年</span><span class="t-cn">发售年份</span><span class="t-en">Year</span></label>
+              <select id="f-year"><option value="">すべての年</option></select>
+            </div>
+            <div>
+              <label for="f-circle"><span class="t-ja">サークル</span><span class="t-cn">社团</span><span class="t-en">Circle</span></label>
+              <select id="f-circle"><option value="">すべてのサークル</option></select>
+            </div>
+            <div>
+              <label for="f-sort"><span class="t-ja">並び替え</span><span class="t-cn">排序</span><span class="t-en">Sort</span></label>
+              <select id="f-sort">
+                <option value="new">新しい順</option>
+                <option value="old">古い順</option>
+                <option value="rate">評価が高い順</option>
+                <option value="sales">販売数が多い順</option>
+                <option value="cheap">価格が安い順</option>
+                <option value="exp">価格が高い順</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="result-bar">
+            <span class="result-count"><b id="res-count">–</b> <span style="font-size:.82em;">作</span></span>
+            <span class="result-hint" id="res-hint"></span>
+          </div>
+
+          <div class="year-unlock-banner" id="year-unlock-banner" hidden>
+            <span id="year-unlock-text"></span>
+            <button type="button" class="btn btn-primary" id="year-unlock-btn" style="min-height:36px;padding:6px 15px;font-size:.78rem;">
+              <span class="t-ja">R18を含む収録作品をすべて表示</span><span class="t-cn">解锁该年全部收录作品</span><span class="t-en">Unlock All Recorded Works</span>
+            </button>
+          </div>
+
+          <div class="works-list" id="works-list"></div>
+          <div class="loading-box" id="works-loading"><span class="t-ja">読み込み中…</span><span class="t-cn">加载中…</span><span class="t-en">Loading…</span></div>
+          <div class="empty-box" id="works-empty" hidden>
+            <span class="t-ja">条件に合う作品が見つかりませんでした。</span>
+            <span class="t-cn">没有符合筛选条件的作品。</span>
+            <span class="t-en">No works matched your filter criteria.</span>
+          </div>
+                    <div class="pager" id="pager"></div>
+
+          <!-- Subordinate Other-Platform Exclusives Annex (rendered only when /data/annex-works.json has verified entries) -->
+          <details class="annex-sec" id="annex-sec" hidden>
+            <summary class="annex-summary">
+              <span class="annex-head-left">
+                <span class="annex-tag">ANNEX</span>
+                <span class="annex-title" id="annex-title">
+                  <span class="t-ja">他プラットフォーム独占収録（FANZA 等・確認済 <b id="annex-cnt-ja">0</b> 作）</span>
+                  <span class="t-cn">其他平台独占收录（FANZA 等 · 已核验 <b id="annex-cnt-cn">0</b> 部）</span>
+                  <span class="t-en">Other-Platform Exclusives (FANZA &amp; others · <b id="annex-cnt-en">0</b> verified)</span>
+                </span>
+              </span>
+              <span class="annex-chev" aria-hidden="true">▾</span>
+            </summary>
+            <div class="annex-body">
+              <p class="annex-note">
+                <span class="t-ja">※DLsite収録作品（本編アーカイブ）とは合算せず、各配信元ページで声優クレジットを個別に確認できた未DLsite配信作品のみを別枠で記録しています（外部サイトでは年齢確認・地域制限が表示される場合があります）。</span>
+                <span class="t-cn">※不计入 DLsite 主档案总数，仅单独收录已在对应平台页面逐一核验声优署名的未登 DLsite 作品（外部平台可能触发地区或年龄确认页面）。</span>
+                <span class="t-en">Counted separately from the main DLsite catalogue; includes only titles not released on DLsite whose CV credits were individually verified on each platform page. (External platforms may show age or region gates.)</span>
+              </p>
+              <div class="annex-gate-bar" id="annex-gate-bar" hidden>
+                <span id="annex-gate-msg"></span>
+                <button type="button" class="btn btn-primary" id="annex-unlock-btn" style="min-height:32px;padding:4px 12px;font-size:.74rem;">
+                  <span class="t-ja">R18を含む全項目を表示</span><span class="t-cn">解锁显示 R18 附表</span><span class="t-en">Show R18 Entries</span>
+                </button>
+              </div>
+              <div class="annex-list" id="annex-list"></div>
+            </div>
+          </details>
+        </div>
+      </main>
+    </div>

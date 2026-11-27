@@ -1,0 +1,17 @@
+{
+ "version": "v1.0.0",
+ "siteName": {
+  "ja": "つばめレコード",
+  "cn": "つばめレコード",
+  "en": "TSUBAME RECORD"
+ },
+ "footerDeclaration": {
+  "ja": "本サイトの掲載情報は各公式公開ページに基づくもので、関連する権利は各権利者に帰属します。",
+  "cn": "本站所载信息均取自各官方公开页面，相关权利归各权利人所有。",
+  "en": "The information listed on this site is based on official public pages, and all related rights belong to their respective holders."
+ },
+ "brandAssets": {
+  "adminYuzuSlice": "/assets/brand/placeholder-icon.png",
+  "adminDashPuff": "/assets/brand/placeholder-puff.png"
+ }
+}

@@ -1,0 +1,60 @@
+<section class="admin-panel" id="panel-site-controls" data-module="site-controls" hidden>
+  <div class="panel-header">
+    <h2><span class="t-ja">公開設定・バックアップ</span><span class="t-cn">显示设置与源码备份</span><span class="t-en">Visibility &amp; Backup</span></h2>
+    <p>
+      <span class="t-ja">R18作品の非表示切り替え、上部お知らせ、機能スイッチ、およびソースコード一式のバックアップをダウンロードできます。</span>
+      <span class="t-cn">这里可切换 R18 作品隐藏、设置顶部公告、调整功能开关，并下载整站源码包备份。</span>
+      <span class="t-en">Toggle R18 visibility, set a top notice, adjust feature flags, or download the full static source bundle for backup or self-hosting.</span>
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="ctrl-block">
+      <div class="row">
+        <div class="grow">
+          <strong><span class="t-ja">R18作品の表示</span><span class="t-cn">R18 作品显示</span><span class="t-en">R18 visibility</span></strong>
+          <div class="desc" id="r18-state">—</div>
+        </div>
+        <button type="button" class="btn mini" id="r18-toggle">—</button>
+      </div>
+    </div>
+
+    <div class="ctrl-block">
+      <div class="row">
+        <div class="grow">
+          <strong><span class="t-ja">トップお知らせバナー</span><span class="t-cn">顶部公告栏</span><span class="t-en">Top notice banner</span></strong>
+          <div class="desc"><span class="t-ja">公開ページの先頭に一行の案内を表示します。空にして保存すると消えます。</span><span class="t-cn">在首页顶部显示一行公告。清空后保存即消失。</span><span class="t-en">Shows a one-line notice at the top of the public site. Save empty to clear.</span></div>
+        </div>
+      </div>
+      <div class="row"><input type="text" id="notice-input" maxlength="160" /></div>
+      <div class="row">
+        <button type="button" class="btn btn-primary mini" id="notice-save"><span class="t-ja">保存</span><span class="t-cn">保存</span><span class="t-en">Save</span></button>
+        <button type="button" class="btn mini" id="notice-clear"><span class="t-ja">消去</span><span class="t-cn">清除</span><span class="t-en">Clear</span></button>
+      </div>
+    </div>
+
+    <div class="ctrl-block">
+      <div class="row">
+        <div class="grow">
+          <strong><span class="t-ja">ソースコード一式（ZIP）</span><span class="t-cn">整站源码包（ZIP）</span><span class="t-en">Site source bundle (ZIP)</span></strong>
+          <div class="desc"><span class="t-ja">サイト一式をZIPで保存できます（連絡ボックス内の非公開メッセージは一切含まれません）。</span><span class="t-cn">打包下载当前完整源码与公开数据（绝不含联络信箱消息），可用于存档或自行部署修改。</span><span class="t-en">Download the site source &amp; public data as a ZIP (private messages are never included) for archival or self-deployment.</span></div>
+        </div>
+        <button type="button" class="btn mini" id="btn-download"><span class="t-ja">ダウンロード</span><span class="t-cn">下载</span><span class="t-en">Download</span> ↓</button>
+      </div>
+    </div>
+    <p class="status" id="status-controls"></p>
+  </div>
+
+  <div class="card">
+    <div class="card-subhead">
+      <h3><span class="t-ja">機能スイッチ</span><span class="t-cn">功能开关</span><span class="t-en">Feature Switches</span></h3>
+    </div>
+    <p class="note">
+      <span class="t-ja">公開ページの表示セクションを切り替えるスイッチです（通常は変更不要です）。</span>
+      <span class="t-cn">用于控制公开页特定区块的显示开关（通常保持默认即可）。</span>
+      <span class="t-en">Optional toggles for individual public sections (usually left as-is).</span>
+    </p>
+    <div class="flag-list" id="flag-list"></div>
+    <p class="status" id="status-flags"></p>
+  </div>
+</section>

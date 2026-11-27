@@ -1,0 +1,37 @@
+<section class="admin-panel" id="panel-milestones" data-module="milestones" hidden>
+  <div class="panel-header">
+    <h2><span class="t-ja">記念日</span><span class="t-cn">纪念日</span><span class="t-en">Milestones</span> <span class="count" id="ms-count">0</span></h2>
+    <p>
+      <span class="t-ja">公開ページの「大切な記念日＆今日の記録」に表示される記念日です。毎年なら「10-21」、一度きりなら「2026-12-10」の形式で入力してください。</span>
+      <span class="t-cn">显示在公开页「特别纪念日与今日记录」卡片上的纪念日。每年重复填「10-21」，仅一次填「2026-12-10」。日语标签与正文必填。</span>
+      <span class="t-en">Managed commemorative dates shown on the public “Special Dates &amp; Today's Record” card. Use “10-21” (yearly) or “2026-12-10” (one-off).</span>
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <div class="grow"><input type="text" id="ms-date" maxlength="10" /></div>
+    </div>
+    <div class="row">
+      <div class="grow"><input type="text" id="ms-label-ja" maxlength="60" placeholder="ラベル（日本語） *" /></div>
+      <div class="grow"><input type="text" id="ms-label-cn" maxlength="60" placeholder="标签（中文）" /></div>
+      <div class="grow"><input type="text" id="ms-label-en" maxlength="60" placeholder="Label (English)" /></div>
+    </div>
+    <div class="row"><textarea id="ms-body-ja" rows="2" maxlength="1000" placeholder="本文（日本語） *"></textarea></div>
+    <div class="row"><textarea id="ms-body-cn" rows="2" maxlength="1000" placeholder="正文（中文）"></textarea></div>
+    <div class="row"><textarea id="ms-body-en" rows="2" maxlength="1000" placeholder="Body (English)"></textarea></div>
+    <div class="row">
+      <div class="grow"><input type="text" id="ms-chips-ja" placeholder="チップ（日本語・カンマ区切り）" /></div>
+      <div class="grow"><input type="text" id="ms-chips-cn" placeholder="小标签（中文・逗号分隔）" /></div>
+      <div class="grow"><input type="text" id="ms-chips-en" placeholder="Chips (English, comma-separated)" /></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button type="button" class="btn btn-primary mini" id="ms-save"><span class="t-ja">記念日を保存</span><span class="t-cn">保存纪念日</span><span class="t-en">Save milestone</span></button>
+      <button type="button" class="btn mini" id="ms-cancel" hidden><span class="t-ja">キャンセル</span><span class="t-cn">取消编辑</span><span class="t-en">Cancel</span></button>
+      <div class="spacer"></div>
+      <button type="button" class="btn mini" id="ms-reset"><span class="t-ja">初期の記念日に戻す</span><span class="t-cn">恢复默认纪念日</span><span class="t-en">Reset to defaults</span></button>
+    </div>
+    <p class="status" id="status-milestones"></p>
+    <div id="ms-list"></div>
+  </div>
+</section>

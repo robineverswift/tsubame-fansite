@@ -1,0 +1,73 @@
+<section class="admin-panel" id="panel-messages" data-module="messages" hidden>
+  <div class="panel-header">
+    <h2><span class="t-ja">連絡ボックス</span><span class="t-cn">联络信箱</span><span class="t-en">Messages</span> <span class="count" id="msg-count">0</span></h2>
+    <p>
+      <span class="t-ja">ご本人様・関係者様からのご連絡や、修正のお願いを残せる非公開ボックスです。いただいた内容は運営者に直接届きます。</span>
+      <span class="t-cn">供本人与相关权利方留下联系或修正请求的非公开信箱，内容会直接送达维护者。</span>
+      <span class="t-en">A private box where [ARTIST NAME] or her representatives can leave a message or a correction request. Messages reach the maintainers directly.</span>
+    </p>
+  </div>
+
+  <div class="card" id="card-messages">
+    <div class="paradigm-picker-grid" id="msg-preset-row">
+      <div class="p-select is-placeholder" id="p-select-cat">
+        <button type="button" class="p-trigger" id="msg-paradigm-cat" aria-haspopup="listbox" aria-expanded="false">
+          <span class="p-trig-body">
+            <span class="p-trig-kicker">
+              <span class="p-step-pill">STEP 1</span>
+              <span><span class="t-ja">ご用件の分類</span><span class="t-cn">事项分类</span><span class="t-en">Category</span></span>
+            </span>
+            <span class="p-trig-val" id="p-cat-val">—</span>
+          </span>
+          <span class="p-chev" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="p-menu" id="p-menu-cat" role="listbox" hidden>
+          <div class="p-menu-head">
+            <span><span class="t-ja">分類を選択してください</span><span class="t-cn">请选择事项分类</span><span class="t-en">Choose a category</span></span>
+            <span class="p-menu-count" id="p-cat-count">6</span>
+          </div>
+          <div class="p-menu-list" id="p-list-cat"></div>
+        </div>
+      </div>
+
+      <div class="p-select is-placeholder is-disabled" id="p-select-text">
+        <button type="button" class="p-trigger" id="msg-paradigm" aria-haspopup="listbox" aria-expanded="false" disabled>
+          <span class="p-trig-body">
+            <span class="p-trig-kicker">
+              <span class="p-step-pill">STEP 2</span>
+              <span><span class="t-ja">お伝えいただく内容</span><span class="t-cn">具体内容</span><span class="t-en">Message</span></span>
+              <span class="p-kind-tag" id="p-selected-kind" hidden></span>
+            </span>
+            <span class="p-trig-val" id="p-text-val">—</span>
+          </span>
+          <span class="p-chev" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="p-menu" id="p-menu-text" role="listbox" hidden>
+          <div class="p-menu-head">
+            <span><span class="t-ja">具体的な内容をお選びください</span><span class="t-cn">请选择具体事项</span><span class="t-en">Choose a specific item</span></span>
+            <span class="p-menu-count" id="p-text-count">0</span>
+          </div>
+          <div class="p-menu-list" id="p-list-text"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="msg-other-drawer" id="msg-other-wrap" hidden>
+      <div class="msg-other-label">
+        <span><span class="t-ja">補足内容をご記入ください</span><span class="t-cn">请填写补充内容</span><span class="t-en">Add details below</span></span>
+        <span class="msg-other-opt-pill"><span class="t-ja">任意・空欄のままでも送信可</span><span class="t-cn">可选・留空也可直接发送</span><span class="t-en">Optional — can send blank</span></span>
+      </div>
+      <textarea id="msg-other-input" rows="3" maxlength="1800"></textarea>
+    </div>
+
+    <div class="row" style="margin-top:10px">
+      <button type="button" class="btn btn-primary mini" id="msg-send"><span class="t-ja">送る</span><span class="t-cn">发送</span><span class="t-en">Send</span></button>
+    </div>
+    <p class="status" id="status-messages"></p>
+    <div id="msg-list"></div>
+  </div>
+</section>

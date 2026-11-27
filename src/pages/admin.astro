@@ -1,0 +1,214 @@
+---
+import "@ui/styles/admin.css";
+import { PARADIGM_GROUPS, STANDING_REPLY, SITE_COPY } from "@data/index";
+import { ADMIN_GROUPS, ADMIN_MODULES } from "@admin/registry";
+import AdminOverview from "@admin/components/AdminOverview.astro";
+import AdminControls from "@admin/components/AdminControls.astro";
+import AdminMessages from "@admin/components/AdminMessages.astro";
+import AdminMilestones from "@admin/components/AdminMilestones.astro";
+import AdminUpcoming from "@admin/components/AdminUpcoming.astro";
+import AdminCatalogArchive from "@admin/components/AdminCatalogArchive.astro";
+import AdminPublication from "@admin/components/AdminPublication.astro";
+import ReplyPopup from "@admin/components/ReplyPopup.astro";
+
+const adminCanonicalData = {
+  paradigms: PARADIGM_GROUPS,
+  standingReply: STANDING_REPLY,
+  version: SITE_COPY.version,
+  modules: ADMIN_MODULES.map((m) => ({ id: m.id, mountId: m.mountId }))
+};
+---
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#DA8C03" />
+  <script is:inline>
+    (function () {
+      try {
+        var t = localStorage.getItem("site_theme");
+        if (t === "midori") {
+          t = "yuzu";
+          try { localStorage.setItem("site_theme", "yuzu"); } catch (e3) {}
+        }
+        var th = (t === "coral" || t === "yuzu") ? t : "yuzu";
+        document.documentElement.dataset.theme = th;
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", th === "coral" ? "#D94B2B" : "#DA8C03");
+      } catch (e) {
+        document.documentElement.dataset.theme = "yuzu";
+      }
+    })();
+  </script>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/yuzu-icon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/yuzu-icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/yuzu-icon-180.png" />
+  <title>つばめレコード・運営・ご本人様窓口</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet" />
+</head>
+<body data-lang="ja">
+  <div class="top-accent-ribbon" aria-hidden="true"></div>
+
+  <!-- Loading / Unauthenticated Gate -->
+  <div class="auth-shell" id="auth-shell">
+    <div class="login-box" id="view-loading">
+      <span class="login-badge">TSUBAME RECORD · ADMIN</span>
+      <p><span class="t-ja">ログイン状態を確認しています…</span><span class="t-cn">正在确认登录状态…</span><span class="t-en">Checking your session…</span></p>
+    </div>
+
+    <div class="login-box" id="view-login" hidden>
+      <span class="login-badge">PRIVATE ACCESS · ご本人様・運営者確認</span>
+      <h2>
+        <span class="t-ja">運営・ご本人様窓口へ</span>
+        <span class="t-cn">进入站点维护与本人窗口</span>
+        <span class="t-en">Site Desk Access</span>
+      </h2>
+      <p>
+        <span class="t-ja">[アーティスト名]ご本人と、認証済みの運営者のみが入れます。確認はX公式 OAuth 2.0（読み取り専用）で行い、パスワードを受け取ることはありません。</span>
+        <span class="t-cn">仅限[アーティスト名]本人与已认证的维护者进入。验证通过 X 官方 OAuth 2.0（只读）进行，本站不接收密码。</span>
+        <span class="t-en">Only [ARTIST NAME] herself and verified maintainers may enter. Verification uses X's official OAuth 2.0 (read-only); this site never receives your password.</span>
+      </p>
+      <div class="login-actions">
+        <a class="btn btn-primary" href="/api/owner/login">
+          <span class="t-ja">X公式画面で本人確認する →</span><span class="t-cn">前往 X 官方页面验证 →</span><span class="t-en">Verify with X →</span>
+        </a>
+        <a class="btn" href="/">
+          <span class="t-ja">トップページへ戻る</span><span class="t-cn">返回网站首页</span><span class="t-en">Return to Home</span>
+        </a>
+      </div>
+      <p class="login-foot">
+        <span class="t-ja">確認が終わると、このまま管理ページに直接戻ります。</span>
+        <span class="t-cn">验证完成后将直接回到本管理页面。</span>
+        <span class="t-en">Once verified, you will return directly to this admin console.</span>
+      </p>
+      <p class="status err" id="login-note" hidden>
+        <span class="t-ja">ログインの有効期限が切れました。もう一度確認してください。</span>
+        <span class="t-cn">登录已过期，请重新验证。</span>
+        <span class="t-en">Your session expired. Please verify again.</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Authenticated App Shell (Sidebar Rendered Purely from Registry) -->
+  <div class="app-shell" id="view-main" hidden>
+    <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+
+    <aside class="sidebar" id="admin-sidebar" aria-label="Admin navigation">
+      <div class="sidebar-brand">
+        <a class="brand-link" href="/">
+          <img class="brand-bird" src="/assets/icons/yuzu-icon-192.png" alt="" aria-hidden="true" />
+          <span>つばめレコード</span>
+        </a>
+        <span class="brand-pill">管理</span>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav">
+        {ADMIN_GROUPS.map((grp) => (
+          <div class="nav-group">
+            <div class="nav-group-label">
+              <span class="t-ja">{grp.label[0]}</span><span class="t-cn">{grp.label[1]}</span><span class="t-en">{grp.label[2]}</span>
+            </div>
+            {ADMIN_MODULES.filter((m) => m.group === grp.id).map((mod) => (
+              <button
+                type="button"
+                class={mod.id === "publication" ? "nav-item is-active" : "nav-item"}
+                data-nav-id={mod.id}
+                aria-current={mod.id === "publication" ? "page" : undefined}
+              >
+                <svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d={mod.iconPath} />
+                </svg>
+                <span class="nav-lbl">
+                  <span class="t-ja">{mod.label[0]}</span><span class="t-cn">{mod.label[1]}</span><span class="t-en">{mod.label[2]}</span>
+                </span>
+                {mod.badgeId && <span class="nav-badge" id={mod.badgeId}>0</span>}
+              </button>
+            ))}
+          </div>
+        ))}
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="who-card" id="nav-who-pill" hidden>
+          <span class="who-dot" aria-hidden="true"></span>
+          <strong id="who-name">—</strong>
+          <span id="who-role"></span>
+        </div>
+        <div class="sidebar-foot-btns">
+          <a class="foot-btn" href="/">
+            <span>←</span>
+            <span class="t-ja">トップへ</span><span class="t-cn">回首页</span><span class="t-en">Home</span>
+          </a>
+          <button type="button" class="foot-btn" id="btn-logout">
+            <span class="t-ja">ログアウト</span><span class="t-cn">退出登录</span><span class="t-en">Log out</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="workspace-col">
+      <header class="workspace-topbar">
+        <button type="button" class="mob-menu-btn" id="mob-menu-btn" aria-label="Menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <div class="topbar-title-wrap">
+          <h1 class="topbar-title">
+            <span class="t-ja">つばめレコード<img class="title-mark-bird" src="/assets/brand/admin-theme-bird-yuzu.png" alt="" aria-hidden="true" /><img class="title-mark-dash" src="/assets/brand/admin-dash-puff-2a2d928d.png" alt="" aria-hidden="true" /></span>
+            <span class="t-cn">つばめレコード<img class="title-mark-bird" src="/assets/brand/admin-theme-bird-yuzu.png" alt="" aria-hidden="true" /><img class="title-mark-dash" src="/assets/brand/admin-dash-puff-2a2d928d.png" alt="" aria-hidden="true" /></span>
+            <span class="t-en">TSUBAME RECORD<img class="title-mark-bird" src="/assets/brand/admin-theme-bird-yuzu.png" alt="" aria-hidden="true" /><img class="title-mark-dash" src="/assets/brand/admin-dash-puff-2a2d928d.png" alt="" aria-hidden="true" /></span>
+          </h1>
+          <script is:inline>
+            (function () {
+              try {
+                var t = document.documentElement.dataset.theme;
+                if (t === "coral") {
+                  var src = "/assets/brand/admin-theme-bird-" + t + ".png";
+                  document.querySelectorAll(".title-mark-bird").forEach(function (img) { img.setAttribute("src", src); });
+                }
+              } catch (e) {}
+            })();
+          </script>
+        </div>
+        <div class="spacer"></div>
+        <div class="lang-pop-wrap">
+          <button type="button" class="globe-btn" id="admin-lang-btn" aria-expanded="false" aria-label="言語設定 / Language" title="言語切替 / 切换语言 / Language">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </button>
+          <div class="lang-menu" id="admin-lang-menu" role="menu" hidden>
+            <button type="button" role="menuitemradio" data-admin-lang-opt="ja" aria-checked="true">日本語</button>
+            <button type="button" role="menuitemradio" data-admin-lang-opt="cn" aria-checked="false">中文</button>
+            <button type="button" role="menuitemradio" data-admin-lang-opt="en" aria-checked="false">English</button>
+          </div>
+        </div>
+        <span class="topbar-ver">{SITE_COPY.version}</span>
+      </header>
+
+      <main class="workspace-main">
+        <AdminPublication />
+        <AdminMessages />
+        <AdminControls />
+        <AdminMilestones />
+        <AdminOverview />
+        <AdminUpcoming />
+        <AdminCatalogArchive />
+      </main>
+    </div>
+  </div>
+
+  <ReplyPopup />
+  <div class="admin-toast" id="admin-toast" role="status" aria-live="polite"></div>
+
+  <script is:inline define:vars={{ adminCanonicalData }}>
+    window.__TSUBAME_ADMIN_DATA__ = adminCanonicalData;
+  </script>
+  <script is:inline src={`/scripts/admin-client.js?v=${SITE_COPY.version}`}></script>
+</body>
+</html>
