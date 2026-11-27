@@ -81,7 +81,7 @@ it goes live. Without `--write` the sync is a dry run.
 the shop's public pages — BOOTH has no public API:
 
 ```sh
-BOOTH_SHOP=yuzuki-tsubame node scripts/sync-booth.mjs --write
+BOOTH_SHOP=your-shop node scripts/sync-booth.mjs --write
 ```
 
 `BOOTH_SHOP` is the shop subdomain (`https://<shop>.booth.pm`). Mapping

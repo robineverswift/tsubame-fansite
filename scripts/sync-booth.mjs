@@ -11,7 +11,7 @@
 // or a collapsed fetch never writes anything), public listings only.
 //
 // Usage:
-//   BOOTH_SHOP=yuzuki-tsubame node scripts/sync-booth.mjs [--write]
+//   BOOTH_SHOP=your-shop node scripts/sync-booth.mjs [--write]
 // BOOTH_SHOP is the shop subdomain (https://<shop>.booth.pm). Without
 // --write the sync is a dry run. BOOTH_BASE overrides the shop origin
 // (testing). BOOTH_COOKIE optionally carries a Cookie header copied from
@@ -138,7 +138,7 @@ function recomputeStats(works) {
 
 async function main() {
   if (!BASE) {
-    throw new Error("Set BOOTH_SHOP (the shop subdomain, e.g. BOOTH_SHOP=yuzuki-tsubame). Nothing was written.");
+    throw new Error("Set BOOTH_SHOP (the shop subdomain, e.g. BOOTH_SHOP=your-shop). Nothing was written.");
   }
   const prevWorks = readJson(WORKS_PATH, []);
   const prevById = new Map(prevWorks.map((r) => [r[0], r]));
