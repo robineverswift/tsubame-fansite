@@ -53,16 +53,16 @@ functions. Channel entries pick an icon from the built-in library in
 
 The catalogue is three generated files under `public/data/` (`works.json`,
 `stats.json`, `upcoming.json`). Never edit them by hand — an **adapter**
-generates them from your artist's platform. The reference adapter covers
-DLsite:
+generates them from your artist's platform. Two adapters ship with the
+framework:
 
 ```sh
-node scripts/sync-dlsite.mjs
+node scripts/sync-dlsite.mjs    # DLsite voice works
+YOUTUBE_API_KEY=... YOUTUBE_CHANNEL_ID=UC... node scripts/sync-youtube.mjs --write
 ```
 
-For another platform (BOOTH, YouTube, …), write an adapter that outputs the
-same files. The contract is specified in
-[docs/ADAPTERS.md](ADAPTERS.md).
+For another platform (BOOTH, …), write an adapter that outputs the same
+files. The contract is specified in [docs/ADAPTERS.md](ADAPTERS.md).
 
 The data shipped in this repository is a small all-ages sample from the
 reference instance, so the site builds and renders before your adapter exists.

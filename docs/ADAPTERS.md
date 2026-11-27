@@ -54,12 +54,28 @@ a work releases, the adapter moves its row into `works.json`.
 4. **Public listings only.** An adapter reads what any visitor can see. No
    logged-in scraping of someone else's account, no private data.
 
-## Reference adapter
+## Reference adapters
 
 `scripts/sync-dlsite.mjs` implements this contract for DLsite (voice works by
 one voice actress, filtered by credited cast). Read it as the worked example:
 discovery, per-work fetch, row construction, stats rebuild, upcoming →
 released promotion, and the safety rules above.
+
+`scripts/sync-youtube.mjs` implements it for YouTube (a VTuber's or creator's
+channel), via the YouTube Data API v3:
+
+```sh
+YOUTUBE_API_KEY=... YOUTUBE_CHANNEL_ID=UC... node scripts/sync-youtube.mjs --write
+```
+
+Get a free API key in the Google Cloud console (YouTube Data API v3); the
+channel ID is the `UC…` identifier on the channel's page. A sync costs
+roughly 1 quota unit per API call — a 1,000-video channel is ~41 units of
+the free 10,000/day. Mapping notes: `metric` is the view count,
+`ratingCount` the like count, `type` is `Video` / `Stream` / `Short`
+(≤ 60 s), dates are the publish date in Asia/Tokyo, and a scheduled stream
+that has not started yet lands in `upcoming.json` and promotes itself once
+it goes live. Without `--write` the sync is a dry run.
 
 ## Writing an adapter for another platform
 
@@ -68,9 +84,6 @@ The audiences this framework is built for live mostly on a few platforms:
 - **BOOTH** (doujin goods by fellow creators) — products map naturally:
   price is real, `metric` is usually unavailable → use `0` and let rating
   columns stay `null` / `0`.
-- **YouTube** (VTuber videos and streams) — a "work" is a video: `price` is
-  `null`, `metric` carries the view count, `type` distinguishes videos,
-  streams and shorts, `maker` is the channel.
 - **Ci-en / Fantia** (creator posts) — posts can be catalogued the same way,
   with the post date as `date` and no price/metric.
 
