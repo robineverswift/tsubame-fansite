@@ -10,7 +10,6 @@ import {
   sameOrigin,
   audit,
   json,
-  b64urlDecodeToBytes,
 } from "./_shared.js";
 
 function b64ToBytes(b64) {

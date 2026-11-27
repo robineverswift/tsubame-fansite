@@ -28,7 +28,7 @@ voice actors, VTubers, and other independent artists.
 
 ## What is included
 
-- **Public site** (Astro, trilingual ja / cn / en): works archive with search,
+- **Public site** (Astro, JA / CN / EN UI modes): works archive with search,
   series grouping and an opt-in R18 gate; statistics computed from the data;
   an "on this day" layer; a channels directory; an About page written as a
   formal declaration.

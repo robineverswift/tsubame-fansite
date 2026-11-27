@@ -3,7 +3,6 @@
   function $(id) { return document.getElementById(id); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function tri(arr) { return '<span class="t-ja">' + esc(arr[0]) + '</span><span class="t-cn">' + esc(arr[1]) + '</span><span class="t-en">' + esc(arr[2]) + '</span>'; }
-  function fmt(n) { return Number(n || 0).toLocaleString("en-US"); }
 
   /* ---------- Language (syncs main site localStorage + live /admin switcher) ---------- */
   var LANG_KEY = "fansite-lang";
@@ -58,11 +57,9 @@
   var THEMES = ["yuzu", "coral"];
   var THEME_META = { yuzu: "#DA8C03", coral: "#D94B2B" };
   var THEME_BIRDS = {
-    yuzu: "/assets/brand/admin-theme-bird-yuzu.png",
-    coral: "/assets/brand/admin-theme-bird-coral.png"
+    yuzu: "/assets/brand/admin-red-bird-124179e7.png",
+    coral: "/assets/brand/admin-red-bird-124179e7.png"
   };
-  var isThemeTransitioning = false;
-  var lastThemeSwitchAt = 0;
   function getAdminTheme() {
     var t = document.documentElement.dataset.theme;
     return THEMES.indexOf(t) >= 0 ? t : "yuzu";
@@ -80,31 +77,6 @@
     if (meta) meta.setAttribute("content", THEME_META[next]);
     var birdSrc = THEME_BIRDS[next];
     document.querySelectorAll(".title-mark-bird").forEach(function (img) { img.setAttribute("src", birdSrc); });
-  }
-  function toggleAdminThemeWithRipple(ev, el) {
-    var now = Date.now();
-    if (isThemeTransitioning || now - lastThemeSwitchAt < 720) return;
-    lastThemeSwitchAt = now;
-    var next = THEMES[(THEMES.indexOf(getAdminTheme()) + 1) % THEMES.length];
-    var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reducedMotion || typeof document.startViewTransition !== "function") {
-      applyAdminTheme(next, true);
-      return;
-    }
-    var rect = el && el.getBoundingClientRect ? el.getBoundingClientRect() : null;
-    var cx = (ev && typeof ev.clientX === "number" && ev.clientX > 0) ? ev.clientX : (rect ? rect.left + rect.width / 2 : window.innerWidth / 2);
-    var cy = (ev && typeof ev.clientY === "number" && ev.clientY > 0) ? ev.clientY : (rect ? rect.top + rect.height / 2 : 48);
-    var endR = Math.hypot(Math.max(cx, window.innerWidth - cx), Math.max(cy, window.innerHeight - cy));
-    isThemeTransitioning = true;
-    var safetyTimer = setTimeout(function () { isThemeTransitioning = false; }, 900);
-    var vt = document.startViewTransition(function () { applyAdminTheme(next, true); });
-    vt.ready.then(function () {
-      document.documentElement.animate(
-        { clipPath: ["circle(0px at " + cx + "px " + cy + "px)", "circle(" + endR + "px at " + cx + "px " + cy + "px)"] },
-        { duration: 640, easing: "cubic-bezier(0.22, 1, 0.36, 1)", pseudoElement: "::view-transition-new(root)" }
-      );
-    }).catch(function () {});
-    vt.finished.finally(function () { clearTimeout(safetyTimer); isThemeTransitioning = false; });
   }
   applyAdminTheme(getAdminTheme(), false);
   window.addEventListener("storage", function (ev) {
@@ -140,19 +112,14 @@
   }
 
   var PH = {
-    ja: { notice: "お知らせ文を入力…", recDate: "日付 (例: 2026-11-23)", recTitle: "タイトル（任意・120字まで）", recBody: "非公開メモを入力（5,000字まで）…", otherBody: "具体的な箇所やご要望があればご記入ください（空欄のままでも送信できます）…", msDate: "日付（毎年: 10-21 / 一度きり: 2026-12-10）", almSearch: "年鑑をキーワード・月日（例: 04-01）で検索…" },
-    cn: { notice: "输入公告文字…", recDate: "日期（如 2026-11-23）", recTitle: "标题（可选，120 字内）", recBody: "输入私密便签（5,000 字内）…", otherBody: "如有具体位置或补充说明请在此填写（留空也可直接发送）…", msDate: "日期（每年: 10-21 / 仅一次: 2026-12-10）", almSearch: "按关键词或日期（如 04-01）检索年鉴故事…" },
-    en: { notice: "Type a notice…", recDate: "Date (e.g. 2026-11-23)", recTitle: "Title (optional, up to 120 chars)", recBody: "Write a private note (up to 5,000 chars)…", otherBody: "Write any specific details here (or leave blank to send as-is)…", msDate: "Date (yearly: 10-21 / one-off: 2026-12-10)", almSearch: "Filter almanac by keyword or MM-DD…" }
+    ja: { notice: "お知らせ文を入力…", otherBody: "作品名・RJ番号・対象箇所などがあればご記入ください（空欄のままでも送信できます）…" },
+    cn: { notice: "输入公告文字…", otherBody: "如有具体作品名、RJ 编号或补充说明请在此填写（留空也可直接发送）…" },
+    en: { notice: "Type a notice…", otherBody: "Include any work title, RJ code, or details here (or leave blank to send as-is)…" }
   };
   function applyPlaceholders() {
     var p = PH[savedLang] || PH.ja;
     if ($("notice-input")) $("notice-input").placeholder = p.notice;
-    if ($("rec-date")) $("rec-date").placeholder = p.recDate;
-    if ($("rec-title")) $("rec-title").placeholder = p.recTitle;
-    if ($("rec-body")) $("rec-body").placeholder = p.recBody;
     if ($("msg-other-input")) $("msg-other-input").placeholder = p.otherBody;
-    if ($("ms-date")) $("ms-date").placeholder = p.msDate;
-    if ($("alm-search")) $("alm-search").placeholder = p.almSearch;
   }
   applyPlaceholders();
 
@@ -172,30 +139,9 @@
     preparing: ["ソースZIPを準備しています…", "正在准备源码 ZIP…", "Preparing the source ZIP…"],
     downloaded: ["ソースZIPをダウンロードしました。", "源码 ZIP 已下载。", "Source ZIP downloaded."],
     dlFailed: ["ダウンロードに失敗しました。再ログインをお試しください。", "下载失败，请重新登录后再试。", "Download failed. Please sign in again."],
-    emptyRecords: ["まだメモはありません。", "还没有便签。", "No notes yet."],
     emptyMessages: ["まだメッセージはありません。", "还没有消息。", "No messages yet."],
-    msEmpty: ["記念日はまだ登録されていません。", "尚未登记纪念日。", "No milestones registered yet."],
-    msSaved: ["記念日を保存しました。", "纪念日已保存。", "Milestone saved."],
-    msUpdated: ["記念日を更新しました。", "纪念日已更新。", "Milestone updated."],
-    msDeleted: ["記念日を削除しました。", "纪念日已删除。", "Milestone deleted."],
-    msResetArm: ["もう一度「初期の記念日に戻す」を押すと、すべての記念日が初期値に戻ります。", "再按一次「恢复默认纪念日」，所有纪念日将重置为默认值。", "Press once more to reset all milestones to the defaults."],
-    msResetDone: ["初期の記念日に戻しました。", "已恢复默认纪念日。", "Milestones reset to the defaults."],
-    msJaReq: ["日本語のラベルと本文を入力してください。", "请填写日语标签与正文。", "Please fill in the Japanese label and body."],
-    msDateReq: ["日付は「10-21」または「2026-12-10」の形式で入力してください。", "日期请用「10-21」或「2026-12-10」格式。", "Use a date like “10-21” or “2026-12-10”."],
-    msYearly: ["毎年", "每年", "Yearly"],
-    msOnce: ["一度きり", "仅一次", "One-off"],
-    msDefaultsNote: ["現在は初期の記念日が表示されています（保存すると上書きされます）。", "当前显示的是默认纪念日（保存后将被覆盖）。", "Showing the default milestones (saving replaces them)."],
-    edit: ["編集", "编辑", "Edit"],
     del: ["消去", "删除", "Delete"],
     delArm: ["もう一度押すと完全削除", "再按一次彻底删除", "Press again to delete"],
-    recBodyReq: ["メモの本文を入力してください。", "请输入便签正文。", "Please write the note."],
-    recUpdated: ["メモを更新しました。", "便签已更新。", "Note updated."],
-    recSaved: ["新しいメモを保存しました。", "新便签已保存。", "New note saved."],
-    recDeleted: ["メモを完全消去しました。", "便签已彻底删除。", "Note permanently deleted."],
-    recNone: ["消去するメモはありません。", "没有可清空的便签。", "There are no notes to delete."],
-    recAllArm: ["もう一度「全件を完全消去」を押すと、全メモが控えを残さず完全削除されます。", "再按一次「彻底清空全部」，所有便签将被彻底删除，不留副本。", "Press Destroy All once more to permanently delete every note, leaving no copies."],
-    recAllDone: ["すべての非公開メモを完全消去しました。", "全部私密便签已彻底删除。", "All private notes permanently deleted."],
-    editing: ["編集中です。変更後に保存を押してください。", "正在编辑，改好后请按保存。", "Editing — press Save when done."],
     msgBodyReq: ["ご用件の分類と内容を選択してください。", "请先选择事项分类与具体内容。", "Please choose a category and message first."],
     sending: ["送信中…", "发送中…", "Sending…"],
     msgSentCreator: ["送りました。", "已发送。", "Sent."],
@@ -210,24 +156,14 @@
     pubClosed: ["現在：非公開（公式へ転送中）", "当前：已关闭（正跳转官方页）", "Status: Closed (Redirecting)"],
     catPlaceholder: ["分類を選択してください…", "请选择事项分类…", "Choose a category…"],
     textDisabledPlaceholder: ["分類を先に選択してください", "请先选择事项分类", "Select a category first"],
-    textReadyPlaceholder: ["内容を選択してください…", "请选择具体内容…", "Choose a message…"],
-    draftReq: ["日付（MM-DD）と日本語の本文を入力してください。", "请填写日期（MM-DD）与日语正文。", "Please enter MM-DD and Japanese text."],
-    draftAdded: ["候補ドラフトを追加しました。", "已添加候选草稿。", "Candidate draft added."],
-    draftApproved: ["承認済みにマークしました。", "已标记为已批准。", "Marked as approved."],
-    draftDismissed: ["候補を削除しました。", "已移除候选草稿。", "Draft dismissed."],
-    draftEmpty: ["現在、承認待ちの候補ドラフトはありません。", "当前没有待审核的候选草稿。", "No candidate drafts in the queue."],
-    approve: ["承認する", "批准入册", "Approve"],
-    approved: ["承認済み", "已批准", "Approved"],
-    pending: ["確認待ち", "待审核", "Pending"],
-    upEmpty: ["現在、発売予定作品はありません。", "当前暂无预定发售作品。", "No upcoming releases right now."],
-    almEmpty: ["条件に合う年鑑エントリがありません。", "没有匹配的年鉴条目。", "No matching almanac entries."]
+    textReadyPlaceholder: ["内容を選択してください…", "请选择具体内容…", "Choose a message…"]
   };
   var KIND = { warning: ["⚠️ 警告", "⚠️ 警告", "⚠️ Warning"], request: ["削除・修正のお願い", "删除・修正请求", "Removal / Fix Request"], other: ["連絡", "留言", "Message"] };
 
   /* ---------- App-Shell Client-Side Router (Registry Driven) ---------- */
   var __CANON = window.__TSUBAME_ADMIN_DATA__ || { paradigms: [], standingReply: { label: ["", "", ""], kind: "other", text: "" }, modules: [] };
   var validModules = (__CANON.modules || []).map(function (m) { return m.id; });
-  if (!validModules.length) validModules = ["publication", "messages", "site-controls", "milestones", "overview", "upcoming", "catalog-archive"];
+  if (!validModules.length) validModules = ["publication", "messages", "site-controls", "catalog-archive"];
   var currentModule = "publication";
 
   function closeMobileDrawer() {
@@ -317,87 +253,12 @@
     var initHash = (window.location.hash || "").replace(/^#/, "");
     switchModule(validModules.indexOf(initHash) !== -1 ? initHash : "publication", false);
 
-    loadOverviewAndHealth();
     loadControlsAndFlags();
     loadMessages();
-    loadMilestones();
-    loadAlmanac();
-    loadDrafts();
     renderPresets();
   }
 
-  /* ---------- Module 1: Overview & Data Health + Upcoming ---------- */
-  var upcomingCache = [];
-  function fmtHeaderDate(r) {
-    var lm = r && r.headers ? r.headers.get("last-modified") : null;
-    if (!lm) return "OK";
-    var d = new Date(lm);
-    if (isNaN(d.getTime())) return "OK";
-    var pad = function (n) { return n < 10 ? "0" + n : String(n); };
-    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()) + " " + pad(d.getHours()) + ":" + pad(d.getMinutes());
-  }
-
-  async function loadOverviewAndHealth() {
-    try {
-      var rs = await Promise.all([
-        fetch("/data/stats.json", { cache: "no-store" }),
-        fetch("/data/upcoming.json", { cache: "no-store" }),
-        fetch("/data/on-this-day.json", { cache: "no-store" }).catch(function () { return null; })
-      ]);
-      if (rs[0] && rs[0].ok) {
-        var stats = await rs[0].json();
-        $("ov-works").textContent = fmt(stats.works_total);
-        $("ov-sales").textContent = fmt(stats.total_sales);
-        var ab = stats.age_breakdown || {};
-        $("ov-r18").textContent = fmt(ab["R18"]) + " / " + fmt(ab["R-15"]) + " / " + fmt(ab["全年齢"]);
-        if ($("hl-stats")) $("hl-stats").textContent = fmt(stats.works_total) + " works · " + (stats.generated_at || stats.updated_at || fmtHeaderDate(rs[0]));
-      }
-      if (rs[1] && rs[1].ok) {
-        upcomingCache = await rs[1].json();
-        if (!Array.isArray(upcomingCache)) upcomingCache = [];
-        $("ov-upcoming").textContent = fmt(upcomingCache.length);
-        setBadge("nav-badge-upcoming", upcomingCache.length);
-        if ($("up-count")) $("up-count").textContent = String(upcomingCache.length);
-        if ($("hl-upcoming")) $("hl-upcoming").textContent = upcomingCache.length + " items · " + fmtHeaderDate(rs[1]);
-        renderUpcoming();
-      }
-      if (rs[2] && rs[2].ok) {
-        var otd = await rs[2].json();
-        var daysObj = (otd && otd.days && typeof otd.days === "object") ? otd.days : otd;
-        var dayCount = daysObj && typeof daysObj === "object" ? Object.keys(daysObj).length : 0;
-        if ($("hl-otd")) $("hl-otd").textContent = dayCount + " days · " + ((otd && (otd.generated_at || otd.generated)) || fmtHeaderDate(rs[2]));
-      } else if ($("hl-otd")) {
-        $("hl-otd").textContent = "—";
-      }
-    } catch (e) {}
-  }
-  if ($("btn-refresh-health")) $("btn-refresh-health").addEventListener("click", function () {
-    loadOverviewAndHealth();
-    loadAlmanac();
-    showToast(S.applied, "ok");
-  });
-
-  function renderUpcoming() {
-    var el = $("up-list");
-    if (!el) return;
-    if (!upcomingCache.length) {
-      el.innerHTML = '<p class="note" style="margin:0">' + tri(S.upEmpty) + "</p>";
-      return;
-    }
-    var AGE_MAP = { 0: "全年齢", 1: "R-15", 2: "R18" };
-    el.innerHTML = upcomingCache.map(function (row) {
-      var rj = row[0] || "", title = row[1] || "", dateStr = row[2] || "", circle = row[3] || "", url = row[10] || "", age = AGE_MAP[row[11]] || "";
-      return '<div class="item"><div class="meta">' +
-        '<span class="tag-pill is-yuzu">' + esc(dateStr) + '</span>' +
-        (age ? '<span class="tag-pill">' + esc(age) + '</span>' : '') +
-        '<span>' + esc(rj) + '</span><span>·</span><span>' + esc(circle) + '</span></div>' +
-        '<div class="ttl">' + esc(title) + '</div>' +
-        (url ? '<div class="acts"><a class="btn mini" href="' + esc(url) + '" target="_blank" rel="noopener">DLsite ↗</a></div>' : '') +
-        '</div>';
-    }).join("");
-  }
-
-  /* ---------- Module 2: Site Controls & Feature Switches ---------- */
+  /* ---------- Module: Site Controls & Feature Switches ---------- */
   var siteClosed = false;
   var hideR18 = false;
   var flagsState = {};
@@ -407,11 +268,11 @@
       pill.innerHTML = tri(siteClosed ? S.pubClosed : S.pubLive);
       pill.className = "tag-pill " + (siteClosed ? "is-warn" : "is-mint");
     }
+    if ($("btn-close-site")) $("btn-close-site").disabled = siteClosed;
+    if ($("btn-open-site")) $("btn-open-site").disabled = !siteClosed;
   }
   var FLAG_DEFS = [
-    { key: "show_upcoming_public", label: ["発売予定セクションを公開", "在首页公开「发售预定」区", "Show Upcoming section publicly"] },
     { key: "hide_almanac", defaultOn: false, label: ["公開ページの「今日の記録（年鑑）」を非表示にする", "隐藏公开页的「今日记录（年鉴）」区块", "Hide the On-This-Day almanac section on the public site"] },
-    { key: "show_data_health_badge", label: ["データ更新日バッジを表示", "显示数据更新日期徽章", "Show data updated-date badge"] },
     { key: "external_youtube_only", defaultOn: true, label: ["公式動画はYouTubeへ直接移動（サイト内再生をオフ）", "官方视频仅跳转 YouTube（关闭站内播放弹窗）", "Open official videos on YouTube only (disable inline player)"] }
   ];
 
@@ -445,7 +306,7 @@
     if (!el) return;
     el.innerHTML = FLAG_DEFS.map(function (f) {
       var on = (typeof flagsState[f.key] === "boolean") ? flagsState[f.key] : !!f.defaultOn;
-      return '<div class="flag-item"><div><strong>' + tri(f.label) + '</strong><span class="flag-key">' + esc(f.key) + '</span></div>' +
+      return '<div class="flag-item"><div><strong>' + tri(f.label) + '</strong></div>' +
         '<button type="button" class="toggle-switch" role="switch" aria-checked="' + (on ? "true" : "false") + '" data-flag-key="' + esc(f.key) + '"></button></div>';
     }).join("");
     el.querySelectorAll("[data-flag-key]").forEach(function (sw) {
@@ -750,219 +611,12 @@
     btn.disabled = false;
   });
 
-  /* ---------- Module 5: Milestones ---------- */
-  var milestones = [], msEditingId = null, msDelArmed = null, msResetArmed = false, msIsDefault = false;
-  function msLangArr(o) { return [(o && o.ja) || "", (o && o.cn) || "", (o && o.en) || ""]; }
-  function msChipsJoin(arr) { return Array.isArray(arr) ? arr.join(", ") : ""; }
-  function msChipsSplit(s) { return String(s || "").split(/[,、，]/).map(function (x) { return x.trim(); }).filter(Boolean); }
-  function msStripHtml(s) { return String(s || "").replace(/<[^>]*>/g, ""); }
-
-  async function loadMilestones() {
-    try {
-      var r = await api("/api/owner/milestones", { cache: "no-store" });
-      if (!r.ok) return;
-      var j = await r.json();
-      milestones = j.milestones || [];
-      msIsDefault = !!j.is_default;
-      renderMilestones();
-    } catch (e) {}
-  }
-  function renderMilestones() {
-    $("ms-count").textContent = String(milestones.length);
-    setBadge("nav-badge-milestones", milestones.length);
-    var el = $("ms-list");
-    var html = msIsDefault ? '<p class="note" style="margin:12px 0 0">' + tri(S.msDefaultsNote) + "</p>" : "";
-    if (!milestones.length) { el.innerHTML = html + '<p class="note" style="margin:12px 0 0">' + tri(S.msEmpty) + "</p>"; return; }
-    el.innerHTML = html + milestones.map(function (m) {
-      var when = m.date ? esc(m.date) + " · " + triText(S.msOnce) : esc(m.md || "") + " · " + triText(S.msYearly);
-      var ttl = esc(triText(msLangArr(m.label))), bdy = esc(msStripHtml(triText(msLangArr(m.body))));
-      return '<div class="item"><div class="meta">' + when + '</div>' +
-        (ttl ? '<div class="ttl">' + ttl + "</div>" : "") +
-        (bdy ? '<div class="bdy">' + bdy + "</div>" : "") +
-        '<div class="acts"><button type="button" class="btn mini" data-ms-edit="' + esc(m.id) + '">' + tri(S.edit) + "</button>" +
-        '<button type="button" class="btn mini" data-ms-del="' + esc(m.id) + '">' + tri(msDelArmed === m.id ? S.delArm : S.del) + "</button></div></div>";
-    }).join("");
-    el.querySelectorAll("[data-ms-edit]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        var m = milestones.find(function (x) { return x.id === b.getAttribute("data-ms-edit"); });
-        if (!m) return;
-        msEditingId = m.id;
-        $("ms-date").value = m.date || m.md || "";
-        $("ms-label-ja").value = (m.label || {}).ja || ""; $("ms-label-cn").value = (m.label || {}).cn || ""; $("ms-label-en").value = (m.label || {}).en || "";
-        $("ms-body-ja").value = (m.body || {}).ja || ""; $("ms-body-cn").value = (m.body || {}).cn || ""; $("ms-body-en").value = (m.body || {}).en || "";
-        $("ms-chips-ja").value = msChipsJoin((m.chips || {}).ja); $("ms-chips-cn").value = msChipsJoin((m.chips || {}).cn); $("ms-chips-en").value = msChipsJoin((m.chips || {}).en);
-        $("ms-cancel").hidden = false;
-        st($("status-milestones"), S.editing, false);
-        $("ms-label-ja").focus();
-      });
-    });
-    el.querySelectorAll("[data-ms-del]").forEach(function (b) {
-      b.addEventListener("click", async function () {
-        var id = b.getAttribute("data-ms-del");
-        if (msDelArmed !== id) { msDelArmed = id; renderMilestones(); return; }
-        msDelArmed = null;
-        try {
-          var r = await api("/api/owner/milestones", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "delete", id: id }) });
-          if (r.ok) { st($("status-milestones"), S.msDeleted, false); loadMilestones(); }
-          else st($("status-milestones"), S.failed, true);
-        } catch (e) { if (String(e.message) !== "unauthorized") st($("status-milestones"), S.connErr, true); }
-      });
-    });
-  }
-  function msClearForm() {
-    msEditingId = null;
-    ["ms-date", "ms-label-ja", "ms-label-cn", "ms-label-en", "ms-body-ja", "ms-body-cn", "ms-body-en", "ms-chips-ja", "ms-chips-cn", "ms-chips-en"].forEach(function (id) { $(id).value = ""; });
-    $("ms-cancel").hidden = true;
-  }
-  $("ms-cancel").addEventListener("click", function () { msClearForm(); st($("status-milestones"), null, false); });
-  $("ms-save").addEventListener("click", async function () {
-    var dateVal = $("ms-date").value.trim(), isFull = /^\d{4}-\d{2}-\d{2}$/.test(dateVal), isMd = /^\d{2}-\d{2}$/.test(dateVal);
-    if (!isFull && !isMd) { st($("status-milestones"), S.msDateReq, true); return; }
-    var label = { ja: $("ms-label-ja").value.trim(), cn: $("ms-label-cn").value.trim(), en: $("ms-label-en").value.trim() };
-    var body = { ja: $("ms-body-ja").value.trim(), cn: $("ms-body-cn").value.trim(), en: $("ms-body-en").value.trim() };
-    if (!label.ja || !body.ja) { st($("status-milestones"), S.msJaReq, true); return; }
-    var payload = { action: msEditingId ? "update" : "create", label: label, body: body, chips: { ja: msChipsSplit($("ms-chips-ja").value), cn: msChipsSplit($("ms-chips-cn").value), en: msChipsSplit($("ms-chips-en").value) } };
-    if (isFull) payload.date = dateVal; else payload.md = dateVal;
-    if (msEditingId) payload.id = msEditingId;
-    var btn = this; btn.disabled = true;
-    try {
-      var r = await api("/api/owner/milestones", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-      if (r.ok) { st($("status-milestones"), msEditingId ? S.msUpdated : S.msSaved, false); msClearForm(); loadMilestones(); }
-      else st($("status-milestones"), S.failed, true);
-    } catch (e) { if (String(e.message) !== "unauthorized") st($("status-milestones"), S.connErr, true); }
-    btn.disabled = false;
-  });
-  $("ms-reset").addEventListener("click", async function () {
-    if (!msResetArmed) {
-      msResetArmed = true; this.classList.add("btn-armed");
-      st($("status-milestones"), S.msResetArm, true);
-      var self = this; setTimeout(function () { msResetArmed = false; self.classList.remove("btn-armed"); }, 6000);
-      return;
-    }
-    msResetArmed = false; this.classList.remove("btn-armed");
-    try {
-      var r = await api("/api/owner/milestones", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "reset" }) });
-      if (r.ok) { st($("status-milestones"), S.msResetDone, false); msClearForm(); loadMilestones(); }
-      else st($("status-milestones"), S.failed, true);
-    } catch (e) { if (String(e.message) !== "unauthorized") st($("status-milestones"), S.connErr, true); }
-  });
-
-  /* ---------- Module 6: Almanac (Read-Only Browser + Drafts Review Queue §2.5.2) ---------- */
-  var almanacEntries = [], drafts = [], draftDelArmed = null;
-  document.querySelectorAll("[data-alm-tab]").forEach(function (tb) {
-    tb.addEventListener("click", function () {
-      var which = tb.getAttribute("data-alm-tab");
-      document.querySelectorAll("[data-alm-tab]").forEach(function (b) {
-        var on = b === tb; b.classList.toggle("is-active", on); b.setAttribute("aria-selected", on ? "true" : "false");
-      });
-      if ($("alm-view-published")) $("alm-view-published").hidden = which !== "published";
-      if ($("alm-view-drafts")) $("alm-view-drafts").hidden = which !== "drafts";
-    });
-  });
-
-  async function loadAlmanac() {
-    try {
-      var r = await fetch("/data/almanac.json", { cache: "no-store" });
-      if (!r.ok) return;
-      var raw = await r.json();
-      almanacEntries = [];
-      Object.keys(raw || {}).sort().forEach(function (md) {
-        (raw[md] || []).forEach(function (ev) {
-          almanacEntries.push({ md: md, y: ev.y || "", emoji: ev.emoji || "✨", text: ev.text || {} });
-        });
-      });
-      if ($("alm-count")) $("alm-count").textContent = String(almanacEntries.length);
-      if ($("hl-almanac")) $("hl-almanac").textContent = almanacEntries.length + " stories · " + fmtHeaderDate(r);
-      renderAlmanac();
-    } catch (_) {}
-  }
-  function renderAlmanac() {
-    var el = $("alm-list");
-    if (!el) return;
-    var q = ($("alm-search") ? $("alm-search").value : "").trim().toLowerCase();
-    var list = !q ? almanacEntries : almanacEntries.filter(function (e) {
-      var hay = (e.md + " " + e.y + " " + (e.text.ja || "") + " " + (e.text.cn || "") + " " + (e.text.en || "")).toLowerCase();
-      return hay.indexOf(q) !== -1;
-    });
-    if (!list.length) { el.innerHTML = '<p class="note" style="margin:10px 0 0">' + tri(S.almEmpty) + "</p>"; return; }
-    el.innerHTML = list.map(function (e) {
-      var bodyTxt = (e.text && e.text[savedLang]) || (e.text && e.text.ja) || "";
-      return '<div class="item"><div class="meta"><span class="tag-pill is-yuzu">' + esc(e.md) + '</span><span>' + esc(e.y) + '</span><span>' + esc(e.emoji) + '</span></div>' +
-        '<div class="bdy">' + esc(bodyTxt) + '</div></div>';
-    }).join("");
-  }
-  if ($("alm-search")) $("alm-search").addEventListener("input", renderAlmanac);
-
-  async function loadDrafts() {
-    try {
-      var r = await api("/api/owner/drafts", { cache: "no-store" });
-      if (!r.ok) return;
-      var j = await r.json();
-      drafts = j.drafts || [];
-      renderDrafts();
-    } catch (_) { renderDrafts(); }
-  }
-  function renderDrafts() {
-    var pendingCount = drafts.filter(function (d) { return d.status !== "approved"; }).length;
-    setBadge("nav-badge-drafts", pendingCount);
-    if ($("drafts-count")) $("drafts-count").textContent = String(drafts.length);
-    var el = $("drafts-list");
-    if (!el) return;
-    if (!drafts.length) { el.innerHTML = '<p class="note" style="margin:12px 0 0">' + tri(S.draftEmpty) + "</p>"; return; }
-    el.innerHTML = drafts.map(function (d) {
-      var isAppr = d.status === "approved";
-      var txt = (d.text && d.text[savedLang]) || (d.text && d.text.ja) || "";
-      return '<div class="item"><div class="meta"><span class="tag-pill is-yuzu">' + esc(d.md) + '</span><span>' + esc(d.y) + '</span><span>' + esc(d.emoji || "✨") + '</span>' +
-        '<span class="tag-pill ' + (isAppr ? "is-mint" : "") + '">' + tri(isAppr ? S.approved : S.pending) + '</span></div>' +
-        '<div class="bdy">' + esc(txt) + '</div><div class="acts">' +
-        (!isAppr ? '<button type="button" class="btn btn-primary mini" data-draft-ok="' + esc(d.id) + '">' + tri(S.approve) + '</button>' : '') +
-        '<button type="button" class="btn mini" data-draft-del="' + esc(d.id) + '">' + tri(draftDelArmed === d.id ? S.delArm : S.del) + '</button></div></div>';
-    }).join("");
-    el.querySelectorAll("[data-draft-ok]").forEach(function (b) {
-      b.addEventListener("click", async function () {
-        try {
-          var r = await api("/api/owner/drafts", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "approve", id: b.getAttribute("data-draft-ok") }) });
-          if (r.ok) { st($("status-drafts"), S.draftApproved, false); loadDrafts(); }
-        } catch (_) {}
-      });
-    });
-    el.querySelectorAll("[data-draft-del]").forEach(function (b) {
-      b.addEventListener("click", async function () {
-        var id = b.getAttribute("data-draft-del");
-        if (draftDelArmed !== id) { draftDelArmed = id; renderDrafts(); return; }
-        draftDelArmed = null;
-        try {
-          var r = await api("/api/owner/drafts", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "dismiss", id: id }) });
-          if (r.ok) { st($("status-drafts"), S.draftDismissed, false); loadDrafts(); }
-        } catch (_) {}
-      });
-    });
-  }
-  if ($("draft-add")) $("draft-add").addEventListener("click", async function () {
-    var md = ($("draft-md").value || "").trim(), ja = ($("draft-ja").value || "").trim();
-    if (!/^\d{2}-\d{2}$/.test(md) || !ja) { st($("status-drafts"), S.draftReq, true); return; }
-    var btn = this; btn.disabled = true;
-    try {
-      var r = await api("/api/owner/drafts", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "create", md: md, year: Number($("draft-year").value) || new Date().getFullYear(), emoji: ($("draft-emoji").value || "✨").trim(), text: { ja: ja } })
-      });
-      if (r.ok) { $("draft-md").value = ""; $("draft-ja").value = ""; st($("status-drafts"), S.draftAdded, false); loadDrafts(); }
-      else st($("status-drafts"), S.failed, true);
-    } catch (e) { if (String(e.message) !== "unauthorized") st($("status-drafts"), S.connErr, true); }
-    btn.disabled = false;
-  });
-
   function syncLangRenderedUI() {
     if ($("who-role") && me) $("who-role").innerHTML = me.is_creator ? "" : " · " + tri(S.roleOwner);
     paintPub();
     paintR18();
     renderFlags();
     renderMessages();
-    renderMilestones();
-    renderUpcoming();
-    renderAlmanac();
-    renderDrafts();
     if (activeCatIdx >= 0 && PARADIGM_GROUPS[activeCatIdx]) {
       if ($("p-cat-val")) $("p-cat-val").textContent = getGroupLabel(PARADIGM_GROUPS[activeCatIdx]);
       var items = PARADIGM_GROUPS[activeCatIdx].items || [];

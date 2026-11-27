@@ -4,7 +4,6 @@
 export const BUNDLE_FILE = "source-bundle-7c6db917923b0e0d.txt"; // base64 of the pre-generated source ZIP
 export const OFFICIAL_SITE = "https://example.com/";
 export const SESSION_COOKIE = "owner_session";
-export const OAUTH1_COOKIE = "owner_oauth1";
 export const PKCE_COOKIE = "owner_pkce";
 export const SESSION_TTL_MS = 15 * 60 * 1000;
 
@@ -73,65 +72,6 @@ export async function verifySession(secret, token) {
   if (!obj || typeof obj.exp !== "number" || Date.now() > obj.exp) return null;
   if (typeof obj.uid !== "string") return null;
   return obj;
-}
-
-// --- OAuth 1.0a signing (HMAC-SHA1) --------------------------------------
-// The owner sign-in uses the classic three-legged OAuth 1.0a flow: X refuses
-// /2/users/me for OAuth 2.0 user tokens on this app (403), while OAuth 1.0a
-// user context works (verified live). The access_token step returns the
-// numeric user_id directly, so no extra lookup call is needed.
-
-export function pct(str) {
-  return encodeURIComponent(String(str)).replace(
-    /[!*'()]/g,
-    (c) => "%" + c.charCodeAt(0).toString(16).toUpperCase()
-  );
-}
-
-export async function hmacSha1B64(key, text) {
-  const enc = new TextEncoder();
-  const k = await crypto.subtle.importKey(
-    "raw",
-    enc.encode(key),
-    { name: "HMAC", hash: "SHA-1" },
-    false,
-    ["sign"]
-  );
-  const sig = await crypto.subtle.sign("HMAC", k, enc.encode(text));
-  const arr = new Uint8Array(sig);
-  let bin = "";
-  for (let i = 0; i < arr.length; i++) bin += String.fromCharCode(arr[i]);
-  return btoa(bin);
-}
-
-// Build an OAuth 1.0a Authorization header. `extra` holds call-specific
-// oauth_* params (oauth_callback / oauth_verifier). All params travel in
-// the header; the signed parameter set is the oauth_* set itself, which is
-// correct for the request_token / access_token calls (empty bodies).
-export async function oauth1Header({ method, url, consumerKey, consumerSecret, token = "", tokenSecret = "", extra = {} }) {
-  const oauth = {
-    oauth_consumer_key: consumerKey,
-    oauth_nonce: randomHex(16),
-    oauth_signature_method: "HMAC-SHA1",
-    oauth_timestamp: Math.floor(Date.now() / 1000).toString(),
-    oauth_version: "1.0",
-    ...extra,
-  };
-  if (token) oauth.oauth_token = token;
-  const paramString = Object.keys(oauth)
-    .sort()
-    .map((k) => `${pct(k)}=${pct(oauth[k])}`)
-    .join("&");
-  const base = `${method.toUpperCase()}&${pct(url)}&${pct(paramString)}`;
-  const signingKey = `${pct(consumerSecret)}&${pct(tokenSecret)}`;
-  oauth.oauth_signature = await hmacSha1B64(signingKey, base);
-  return (
-    "OAuth " +
-    Object.keys(oauth)
-      .sort()
-      .map((k) => `${pct(k)}="${pct(oauth[k])}"`)
-      .join(", ")
-  );
 }
 
 export function parseCookies(request) {

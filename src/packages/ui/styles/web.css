@@ -295,8 +295,9 @@
       --radius-lg: 22px;
       --radius-md: 16px;
       --radius-pill: 999px;
-      --font-round: "Zen Maru Gothic", "M PLUS Rounded 1c", "Noto Sans SC", -apple-system, "PingFang SC", sans-serif;
-      --font-num: "Fredoka", "Zen Maru Gothic", sans-serif;
+      --font-round: "BIZ UDPGothic", "Noto Sans SC", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      --font-num: "BIZ UDPGothic", "Noto Sans SC", sans-serif;
+      --font-display: "M PLUS Rounded 1c", "BIZ UDPGothic", "Noto Sans SC", sans-serif;
       --spring: cubic-bezier(0.34, 1.48, 0.64, 1);
       --heat0: var(--th-c12);
       --heat1: var(--th-c13);
@@ -313,9 +314,12 @@
       color: var(--ink);
       background: linear-gradient(180deg, var(--th-c1) 0%, var(--th-c15) 36%, var(--th-c16) 72%, var(--th-c17) 100%);
       background-attachment: fixed;
-      line-height: 1.74;
-      font-feature-settings: "palt" 1;
-      text-autospace: normal;
+      line-height: 1.78;
+      letter-spacing: 0.01em;
+      font-feature-settings: "palt" 0;
+      font-variant-numeric: tabular-nums;
+      text-autospace: no-autospace;
+      font-synthesis-weight: none;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
@@ -706,7 +710,7 @@
       margin: 16px 0 0;
       font-size: 0.95rem;
       color: var(--ink-soft);
-      font-weight: 500;
+      font-weight: 400;
     }
 
     .hero-stats {
@@ -723,7 +727,7 @@
       text-align: center;
       box-shadow: 0 5px 14px rgba(var(--th-rgb4), 0.07);
     }
-    .stat-pill .num { font-family: var(--font-num); font-weight: 700; font-size: clamp(1.22rem, 2.6vw, 1.65rem); line-height: 1.1; color: var(--coral-deep); }
+    .stat-pill .num { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.14rem, 2.1vw, 1.46rem); line-height: 1.1; white-space: nowrap; color: var(--coral-deep); transform: rotateZ(0.03deg); }
     .stat-pill .num em { font-style: normal; color: var(--yuzu-deep); margin: 0 1px; }
     .stat-pill .lab { margin-top: 4px; font-size: 0.7rem; font-weight: 700; color: var(--muted); }
 
@@ -1362,7 +1366,7 @@
       color: var(--ink);
       font-family: var(--font-round);
       font-size: 0.9rem;
-      font-weight: 600;
+      font-weight: 400;
       outline: none;
     }
     .result-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 18px 2px 12px; }
@@ -1403,7 +1407,7 @@
     .age-pill.r15 { background: var(--amber-pale); color: var(--amber); border: 1.5px solid #f5c380; }
     .age-pill.r18 { background: var(--coral-pale); color: var(--coral-deep); border: 1.5px solid var(--th-c31); }
     .work-card h3 { margin: 0 0 5px; font-size: 0.98rem; font-weight: 800; line-height: 1.5; }
-    .w-meta { display: flex; gap: 6px 12px; flex-wrap: wrap; font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+    .w-meta { display: flex; gap: 6px 12px; flex-wrap: wrap; font-size: 0.8rem; color: var(--muted); font-weight: 400; }
     .w-meta .circ { color: var(--coral-deep); font-weight: 800; }
     .w-tags { margin-top: 7px; display: flex; flex-wrap: wrap; gap: 5px; }
     .w-tag { font-size: 0.7rem; font-weight: 700; background: var(--peach); color: var(--ink-soft); padding: 2px 8px; border-radius: var(--radius-pill); }
@@ -2669,7 +2673,7 @@
       filter: drop-shadow(0 15px 28px rgba(var(--th-rgb14), 0.22));
     }
     .hero-logo-svg text {
-      font-family: "M PLUS Rounded 1c", "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif;
+      font-family: var(--font-round);
       font-weight: 900;
       font-size: 118px;
       letter-spacing: 0.02em;
@@ -2841,7 +2845,7 @@
       border-radius: 14px;
     }
     .kt-glyph {
-      font-family: "M PLUS Rounded 1c", "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif;
+      font-family: var(--font-round);
       font-weight: 900;
       font-size: clamp(2.65rem, 8.4vw, 5.15rem);
       line-height: 1.06;
@@ -3177,14 +3181,15 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     footer .foot-brand-row .foot-badge {
       margin: 0;
     }
     footer .foot-quiet-line {
-      margin: 4px 0 14px;
-      font-size: 0.84rem;
+      margin: 0 0 4px;
+      font-size: 0.86rem;
+      line-height: 1.62;
       color: var(--ink-soft);
     }
     footer .foot-quiet-line a {
@@ -3974,7 +3979,7 @@
       margin-bottom: 10px;
     }
     .x-lineage-badge {
-      font-family: "Fredoka", sans-serif;
+      font-family: var(--font-display);
       font-size: 0.64rem;
       font-weight: 700;
       letter-spacing: 0.06em;
@@ -4007,7 +4012,7 @@
     }
     .xl-chip em {
       font-style: normal;
-      font-weight: 600;
+      font-weight: 400;
       font-size: 0.68rem;
       opacity: 0.78;
     }
@@ -4059,7 +4064,7 @@
       border-top: 1px dashed rgba(var(--th-rgb21), 0.22);
     }
     .starter-subbadge {
-      font-family: "Fredoka", sans-serif;
+      font-family: var(--font-display);
       font-size: 0.64rem;
       font-weight: 700;
       letter-spacing: 0.06em;
@@ -4271,8 +4276,12 @@
       background: linear-gradient(180deg, var(--th-c74) 0%, var(--th-c75) 52%, var(--th-c76) 100%) !important;
       background-attachment: fixed !important;
       color: var(--ink) !important;
-      font-weight: 500;
-      font-feature-settings: "palt" 1;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      font-feature-settings: "palt" 0;
+      font-variant-numeric: tabular-nums;
+      text-autospace: no-autospace;
+      font-synthesis-weight: none;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -4305,18 +4314,18 @@
       box-shadow: var(--shadow-card) !important;
     }
 
-    /* 3. Fuller Font Weights, Print-Sharp Contrast & Generous Reading Measure */
+    /* 3. Clean 400/700 Weight Hierarchy, Print-Sharp Contrast & Generous Reading Measure */
     .hero-desc {
       font-size: 1.02rem !important;
       line-height: 1.85 !important;
-      font-weight: 500 !important;
+      font-weight: 400 !important;
       color: var(--ink-soft) !important;
       max-width: 650px !important;
     }
     .sec-lede {
       font-size: 0.98rem !important;
       line-height: 1.84 !important;
-      font-weight: 500 !important;
+      font-weight: 400 !important;
       color: var(--ink-soft) !important;
       margin-bottom: 24px !important;
       padding-bottom: 16px;
@@ -4361,7 +4370,7 @@
     .starter-card p {
       margin: 2px 0 0 !important;
       font-size: 0.92rem !important;
-      font-weight: 500 !important;
+      font-weight: 400 !important;
       color: var(--ink-soft) !important;
       line-height: 1.78 !important;
       text-wrap: pretty;
@@ -4395,7 +4404,7 @@
     }
     .pg-sub {
       font-size: 0.83rem !important;
-      font-weight: 500 !important;
+      font-weight: 400 !important;
       color: var(--ink-soft) !important;
     }
 
@@ -4407,13 +4416,13 @@
     }
     .link-note {
       font-size: 0.84rem !important;
-      font-weight: 500 !important;
+      font-weight: 400 !important;
       color: var(--ink-soft) !important;
       line-height: 1.58 !important;
     }
     .mem-detail {
       font-size: 0.96rem !important;
-      font-weight: 500 !important;
+      font-weight: 400 !important;
       line-height: 1.82 !important;
       color: var(--ink-soft) !important;
     }
@@ -4424,14 +4433,23 @@
     }
     .w-meta {
       font-size: 0.83rem !important;
-      font-weight: 600 !important;
+      font-weight: 400 !important;
       color: var(--ink-soft) !important;
     }
     footer p {
-      font-size: 0.88rem !important;
-      font-weight: 500 !important;
-      line-height: 1.78 !important;
+      font-size: 0.86rem !important;
+      font-weight: 400 !important;
+      line-height: 1.62 !important;
       color: var(--ink-soft) !important;
+    }
+    footer .foot-quiet-line {
+      margin: 0 0 4px !important;
+    }
+    footer .src {
+      margin: 10px 0 0 !important;
+      font-size: 0.76rem !important;
+      line-height: 1.5 !important;
+      color: var(--muted) !important;
     }
 
     @media (max-width: 640px) {
@@ -4738,7 +4756,7 @@
     }
     .splash-sound-hint {
       font-size: 0.76rem;
-      font-weight: 500;
+      font-weight: 400;
       color: rgba(255, 255, 255, 0.78);
       letter-spacing: 0.03em;
       text-align: center;
@@ -5694,7 +5712,7 @@
 
 .era-short {
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--ink-soft);
 }
 
@@ -5833,7 +5851,7 @@
   background: rgba(255, 255, 255, 0.85);
   color: var(--ink);
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
   transition: border-color 0.16s ease, background 0.16s ease;
 }
@@ -6409,4 +6427,46 @@
     width: 100%;
     max-width: 100%;
   }
+}
+
+/* ==================== v1.5.0 DUAL-FONT DISPLAY HIERARCHY ==================== */
+.splash-word,
+.folder-tab,
+.cd-title,
+.cd-box .v,
+.era-headline,
+.gate-card h3,
+.sub-card h3,
+.about-card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  transform: rotateZ(0.03deg);
+}
+.folder-tab {
+  font-size: clamp(1.12rem, 2.5vw, 1.32rem);
+}
+.folder-tab .sec-no {
+  font-family: var(--font-num);
+  font-weight: 700;
+}
+.cd-box .v {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+.era-yrs {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.04rem;
+}
+.era-headline {
+  font-size: 1.15rem;
+}
+.sub-card h3,
+.about-card h3 {
+  font-size: 1.12rem;
+}
+.hero-cta .btn {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.94rem;
 }

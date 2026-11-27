@@ -2,11 +2,8 @@
 import "@ui/styles/admin.css";
 import { PARADIGM_GROUPS, STANDING_REPLY, SITE_COPY } from "@data/index";
 import { ADMIN_GROUPS, ADMIN_MODULES } from "@admin/registry";
-import AdminOverview from "@admin/components/AdminOverview.astro";
 import AdminControls from "@admin/components/AdminControls.astro";
 import AdminMessages from "@admin/components/AdminMessages.astro";
-import AdminMilestones from "@admin/components/AdminMilestones.astro";
-import AdminUpcoming from "@admin/components/AdminUpcoming.astro";
 import AdminCatalogArchive from "@admin/components/AdminCatalogArchive.astro";
 import AdminPublication from "@admin/components/AdminPublication.astro";
 import ReplyPopup from "@admin/components/ReplyPopup.astro";
@@ -45,10 +42,10 @@ const adminCanonicalData = {
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/yuzu-icon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/yuzu-icon-192.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/yuzu-icon-180.png" />
-  <title>つばめレコード・運営・ご本人様窓口</title>
+  <title>つばめレコード</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&family=BIZ+UDPGothic:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body data-lang="ja">
   <div class="top-accent-ribbon" aria-hidden="true"></div>
@@ -61,16 +58,16 @@ const adminCanonicalData = {
     </div>
 
     <div class="login-box" id="view-login" hidden>
-      <span class="login-badge">PRIVATE ACCESS · ご本人様・運営者確認</span>
+      <span class="login-badge">PRIVATE ACCESS</span>
       <h2>
-        <span class="t-ja">運営・ご本人様窓口へ</span>
-        <span class="t-cn">进入站点维护与本人窗口</span>
-        <span class="t-en">Site Desk Access</span>
+        <span class="t-ja">認証ページ</span>
+        <span class="t-cn">验证入口</span>
+        <span class="t-en">Verification</span>
       </h2>
       <p>
-        <span class="t-ja">[アーティスト名]ご本人と、認証済みの運営者のみが入れます。確認はX公式 OAuth 2.0（読み取り専用）で行い、パスワードを受け取ることはありません。</span>
-        <span class="t-cn">仅限[アーティスト名]本人与已认证的维护者进入。验证通过 X 官方 OAuth 2.0（只读）进行，本站不接收密码。</span>
-        <span class="t-en">Only [ARTIST NAME] herself and verified maintainers may enter. Verification uses X's official OAuth 2.0 (read-only); this site never receives your password.</span>
+        <span class="t-ja">対象は[アーティスト名]ご本人および認証済み運営者です。認証には X OAuth 2.0（PKCE・users.read / tweet.read）を使用します。</span>
+        <span class="t-cn">仅限[アーティスト名]本人与已认证维护者进入。验证采用 X OAuth 2.0（PKCE，只读权限 users.read / tweet.read）。</span>
+        <span class="t-en">Access is limited to [ARTIST NAME] and verified maintainers. Authentication uses X OAuth 2.0 (PKCE, read-only scopes users.read / tweet.read).</span>
       </p>
       <div class="login-actions">
         <a class="btn btn-primary" href="/api/owner/login">
@@ -157,21 +154,11 @@ const adminCanonicalData = {
         </button>
         <div class="topbar-title-wrap">
           <h1 class="topbar-title">
-            <span class="t-ja">つばめレコード<img class="title-mark-bird" src="/assets/brand/admin-theme-bird-yuzu.png" alt="" aria-hidden="true" /><img class="title-mark-dash" src="/assets/brand/admin-dash-puff-2a2d928d.png" alt="" aria-hidden="true" /></span>
-            <span class="t-cn">つばめレコード<img class="title-mark-bird" src="/assets/brand/admin-theme-bird-yuzu.png" alt="" aria-hidden="true" /><img class="title-mark-dash" src="/assets/brand/admin-dash-puff-2a2d928d.png" alt="" aria-hidden="true" /></span>
-            <span class="t-en">TSUBAME RECORD<img class="title-mark-bird" src="/assets/brand/admin-theme-bird-yuzu.png" alt="" aria-hidden="true" /><img class="title-mark-dash" src="/assets/brand/admin-dash-puff-2a2d928d.png" alt="" aria-hidden="true" /></span>
+            <span class="t-ja">つばめレコード<img class="title-mark-bird" src="/assets/brand/admin-red-bird-124179e7.png" alt="" aria-hidden="true" /><img class="title-mark-dash" src="/assets/brand/admin-dash-puff-2a2d928d.png" alt="" aria-hidden="true" /></span>
+            <span class="t-cn">つばめレコード<img class="title-mark-bird" src="/assets/brand/admin-red-bird-124179e7.png" alt="" aria-hidden="true" /><img class="title-mark-dash" src="/assets/brand/admin-dash-puff-2a2d928d.png" alt="" aria-hidden="true" /></span>
+            <span class="t-en">TSUBAME RECORD<img class="title-mark-bird" src="/assets/brand/admin-red-bird-124179e7.png" alt="" aria-hidden="true" /><img class="title-mark-dash" src="/assets/brand/admin-dash-puff-2a2d928d.png" alt="" aria-hidden="true" /></span>
           </h1>
-          <script is:inline>
-            (function () {
-              try {
-                var t = document.documentElement.dataset.theme;
-                if (t === "coral") {
-                  var src = "/assets/brand/admin-theme-bird-" + t + ".png";
-                  document.querySelectorAll(".title-mark-bird").forEach(function (img) { img.setAttribute("src", src); });
-                }
-              } catch (e) {}
-            })();
-          </script>
+
         </div>
         <div class="spacer"></div>
         <div class="lang-pop-wrap">
@@ -195,9 +182,6 @@ const adminCanonicalData = {
         <AdminPublication />
         <AdminMessages />
         <AdminControls />
-        <AdminMilestones />
-        <AdminOverview />
-        <AdminUpcoming />
         <AdminCatalogArchive />
       </main>
     </div>

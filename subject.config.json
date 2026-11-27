@@ -3,9 +3,9 @@
   "_about": "The single configuration file for this framework. Edit it, then run node scripts/apply-subject.mjs to stamp the values into the sources. In the framework's own source repository this file ships with sample values.",
   "subject": {
     "name": {
-      "ja": "柚木つばめ",
-      "cn": "柚木つばめ",
-      "en": "Yuzuki Tsubame"
+      "ja": "[アーティスト名]",
+      "cn": "[アーティスト名]",
+      "en": "[ARTIST NAME]"
     },
     "role": "voice actress"
   },
@@ -30,20 +30,22 @@
   },
   "fonts": {
     "webFamilies": [
-      "Fredoka:wght@500;600;700",
-      "M PLUS Rounded 1c:wght@500;700;800",
-      "Noto Sans SC:wght@400;500;700",
-      "Zen Maru Gothic:wght@500;700;900"
+      "M PLUS Rounded 1c:wght@700",
+      "BIZ UDPGothic:wght@400;700",
+      "Noto Sans SC:wght@400;700"
     ],
     "adminFamilies": [
-      "Fredoka:wght@600;700",
-      "Zen Maru Gothic:wght@500;700;900"
+      "M PLUS Rounded 1c:wght@700",
+      "BIZ UDPGothic:wght@400;700",
+      "Noto Sans SC:wght@400;700"
     ],
     "stacks": {
-      "webRound": "\"Zen Maru Gothic\", \"M PLUS Rounded 1c\", \"Noto Sans SC\", -apple-system, \"PingFang SC\", sans-serif",
-      "webNum": "\"Fredoka\", \"Zen Maru Gothic\", sans-serif",
-      "adminRound": "\"Zen Maru Gothic\", \"Hiragino Maru Gothic ProN\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
-      "adminNum": "\"Fredoka\", \"Zen Maru Gothic\", sans-serif"
+      "webRound": "\"BIZ UDPGothic\", \"Noto Sans SC\", -apple-system, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "webNum": "\"BIZ UDPGothic\", \"Noto Sans SC\", sans-serif",
+      "webDisplay": "\"M PLUS Rounded 1c\", \"BIZ UDPGothic\", \"Noto Sans SC\", sans-serif",
+      "adminRound": "\"BIZ UDPGothic\", \"Noto Sans SC\", \"Hiragino Sans\", \"Yu Gothic UI\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "adminNum": "\"BIZ UDPGothic\", \"Noto Sans SC\", sans-serif",
+      "adminDisplay": "\"M PLUS Rounded 1c\", \"BIZ UDPGothic\", \"Noto Sans SC\", sans-serif"
     }
   },
   "theme": {

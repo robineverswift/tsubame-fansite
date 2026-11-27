@@ -11,9 +11,10 @@
 // What gets stamped:
 //   - src/packages/data/site-copy.json : siteName, footerDeclaration, brandAssets
 //                                        (the "version" field is never touched)
-//   - src/packages/ui/styles/web.css   : --th-* theme tokens, --font-round/--font-num
+//   - src/packages/ui/styles/web.css   : --th-* theme tokens,
+//                                        --font-round/--font-num/--font-display
 //   - src/packages/ui/styles/admin.css : its own --th-* palette (adminTheme),
-//                                        --font-round/--font-num
+//                                        --font-round/--font-num/--font-display
 //   - src/pages/index.astro            : Google Fonts URL (fonts.webFamilies)
 //   - src/pages/admin.astro            : Google Fonts URL (fonts.adminFamilies)
 //   - public/scripts/web-client.js     : the LINKS channel directory, regenerated
@@ -69,9 +70,9 @@ function stampCss(text, tokens, stacks) {
   return out;
 }
 stamp("src/packages/ui/styles/web.css", (t) =>
-  stampCss(t, cfg.theme.tokens, { "--font-round": cfg.fonts.stacks.webRound, "--font-num": cfg.fonts.stacks.webNum }));
+  stampCss(t, cfg.theme.tokens, { "--font-round": cfg.fonts.stacks.webRound, "--font-num": cfg.fonts.stacks.webNum, "--font-display": cfg.fonts.stacks.webDisplay }));
 stamp("src/packages/ui/styles/admin.css", (t) =>
-  stampCss(t, cfg.adminTheme.tokens, { "--font-round": cfg.fonts.stacks.adminRound, "--font-num": cfg.fonts.stacks.adminNum }));
+  stampCss(t, cfg.adminTheme.tokens, { "--font-round": cfg.fonts.stacks.adminRound, "--font-num": cfg.fonts.stacks.adminNum, "--font-display": cfg.fonts.stacks.adminDisplay }));
 
 // 3) Astro pages — rebuild the Google Fonts css2 URL from the family list.
 function fontUrl(families) {

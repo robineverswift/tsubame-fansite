@@ -143,7 +143,6 @@
       yuzu: "/assets/brand/noto-bird-theme-yuzu.webp",
       coral: "/assets/brand/noto-bird-theme-coral.webp"
     };
-    var THEME_NOTE_COLORS = { yuzu: "#e08d03", coral: "#ef6688" };
     var isThemeTransitioning = false;
     var lastThemeSwitchAt = 0;
     var pendingSiteTheme = null;
@@ -213,7 +212,6 @@
       bird.style.left = (window.innerWidth + 20) + "px";
       bird.style.top = startY + "px";
       var activeTheme = pendingSiteTheme || getSiteTheme();
-      var uid = "b" + Math.random().toString(36).slice(2, 7);
       var NOTO_PUFF = "/assets/brand/noto-puff-fb0b3b19.webp";
       var birdSrc = THEME_BIRDS[activeTheme] || THEME_BIRDS.yuzu;
       bird.innerHTML = '<img src="' + birdSrc + '" alt="" width="64" height="64" style="display:block;width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(56,34,40,0.16));">';
@@ -222,7 +220,6 @@
       var wing = bird.querySelector("#fb-wing-el");
       var beak = bird.querySelector("#fb-beak-el");
       var vw = window.innerWidth;
-      var vh = window.innerHeight;
       var startX = vw + 20;
       var hoverX = vw <= 560
         ? Math.max(190, vw * 0.72)
@@ -322,17 +319,44 @@
       }
       requestAnimationFrame(step);
     }
-    var SWALLOW_CHEERS = [
-      "ちゅんぴー！",
-      "10年間ありがとう！",
-      "今日もお疲れさま！",
-      "ゆっくり休んでね",
-      "ずっと聴いてるよ！"
+    var SWALLOW_CHIRPS = [
+      "ちゅんぴー ♪",
+      "ちゅんちゅん",
+      "ちゅんぴっ",
+      "ぴゅーん",
+      "ちゅんちゅんぴっ"
     ];
-    var swallowCheerIdx = 0;
+    var SWALLOW_RARE_LINES = [
+      "素敵な声をありがとう ♪",
+      "いつもありがとう ♪",
+      "今日もお疲れさま ♪",
+      "今日もいい日になりますように"
+    ];
+    var swallowClickCount = 0;
+    var lastChirpIdx = -1;
+    var swallowRareIdx = 0;
+    var clicksSinceRare = 0;
+    function pickSwallowBubbleText() {
+      swallowClickCount++;
+      if (swallowClickCount === 1) {
+        lastChirpIdx = 0;
+        clicksSinceRare = 1;
+        return SWALLOW_CHIRPS[0];
+      }
+      // Low-frequency sincere line (~15% after 3+ chirps and >=4-click cooldown)
+      if (swallowClickCount >= 4 && clicksSinceRare >= 4 && Math.random() < 0.15) {
+        clicksSinceRare = 0;
+        return SWALLOW_RARE_LINES[swallowRareIdx++ % SWALLOW_RARE_LINES.length];
+      }
+      clicksSinceRare++;
+      var idx = Math.floor(Math.random() * (SWALLOW_CHIRPS.length - 1));
+      if (idx >= lastChirpIdx) idx++;
+      lastChirpIdx = idx;
+      return SWALLOW_CHIRPS[idx];
+    }
     function launchSwallowWithBubble(ev) {
       var didSwitch = toggleSiteThemeWithRipple(ev, $("swallow-btn"));
-      var msg = SWALLOW_CHEERS[swallowCheerIdx++ % SWALLOW_CHEERS.length];
+      var msg = pickSwallowBubbleText();
       launchSwallow({ _cheerText: msg, _themeSwitch: didSwitch, clientX: ev && ev.clientX, clientY: ev && ev.clientY });
     }
     $("swallow-btn").addEventListener("click", launchSwallowWithBubble);
@@ -1846,7 +1870,6 @@
       ];
 
       var flowRaw = { videos: CURATED_VIDEOS.slice(), upcoming: [], releases: [], milestones: FALLBACK_MILESTONES };
-      var FLOW_CATS = ["videos"];
       var flowFilter = "videos";
       var flowPage = 0;
       var shortsPage = 0;
@@ -2536,7 +2559,7 @@
 
       function playChime(freq, vol) {
         try {
-          const AC = window.AudioContext || window.webkitAudioContext;
+          const AC = window.AudioContext || window["webkitAudioContext"];
           if (!AC) return;
           if (!chimeCtx) chimeCtx = new AC();
           if (chimeCtx.state === "suspended") chimeCtx.resume();
@@ -2677,7 +2700,7 @@
 
       function chime() {
         try {
-          const AC = window.AudioContext || window.webkitAudioContext;
+          const AC = window.AudioContext || window["webkitAudioContext"];
           if (!AC) return;
           if (!ctx) ctx = new AC();
           if (ctx.state === "suspended") ctx.resume();
@@ -2827,25 +2850,26 @@
 
 
   
-    /* ---------- v2.9.4 Audiophile Micro-SE Engine (Throttled, Vinyl-Warm & Properly Wired) ---------- */
+    /* ---------- v2.9.4 Audiophile Micro-SE Engine (Unified WebAudio, Non-Repeating Chimes & Throttled) ---------- */
     (function initTsubameSeEngine() {
       var seCtx = null;
-      var seBuffers = {};
       var seGen = 0;
-      var seAudioCache = {};
-      var seRealMissing = {};
       var lastPlayed = {};
       var SE_COOLDOWN_MS = 68;
-      var SE_FILES = {
-        swallow: "./audio/se-swallow.mp3",
-        dial: "./audio/se-dial.mp3",
-        pop: "./audio/se-pop.mp3"
-      };
-      var isHttp = window.location.protocol === "https:" || window.location.protocol === "http:";
+      var SWALLOW_MOTIFS = [
+        [1046.50, 1568.00, 0.048], // C6 -> G6 (signature first chime)
+        [1174.66, 1760.00, 0.045], // D6 -> A6
+        [1318.51, 1975.53, 0.040], // E6 -> B6
+        [880.00, 1318.51, 0.050],  // A5 -> E6
+        [1046.50, 1318.51, 0.048], // C6 -> E6
+        [1567.98, 2093.00, 0.036]  // G6 -> C7 (softer high shimmer)
+      ];
+      var swallowClicks = 0;
+      var lastSwallowIdx = -1;
 
       function getSeCtx() {
         if (!seCtx) {
-          var Ctx = window.AudioContext || window.webkitAudioContext;
+          var Ctx = window.AudioContext || window["webkitAudioContext"];
           if (!Ctx) return null;
           seCtx = new Ctx();
         }
@@ -2863,41 +2887,32 @@
         }, delayMs);
       }
 
-      function ensureSeBuffer(kind) {
-        var ctx = getSeCtx();
-        if (!ctx || seBuffers[kind]) return;
-        if (typeof fetch !== "function" || !ctx.decodeAudioData) { seRealMissing[kind] = true; return; }
-        fetch(SE_FILES[kind]).then(function (r) { return r.arrayBuffer(); }).then(function (buf) {
-          return ctx.decodeAudioData(buf);
-        }).then(function (decoded) {
-          seBuffers[kind] = decoded;
-        }).catch(function () { seRealMissing[kind] = true; });
-      }
-
-      function playBufferSe(kind) {
-        var ctx = getSeCtx();
-        if (!ctx || !seBuffers[kind]) { playSynthSe(kind); scheduleSeSuspend(500); return; }
-        var src = ctx.createBufferSource();
-        src.buffer = seBuffers[kind];
-        var g = ctx.createGain();
-        g.gain.value = 0.14;
-        src.connect(g); g.connect(ctx.destination);
-        src.start(0);
-        scheduleSeSuspend(seBuffers[kind].duration * 1000 + 90);
+      function nextSwallowMotif() {
+        if (swallowClicks === 0) {
+          swallowClicks = 1;
+          lastSwallowIdx = 0;
+          return SWALLOW_MOTIFS[0];
+        }
+        swallowClicks++;
+        var nextIdx = Math.floor(Math.random() * (SWALLOW_MOTIFS.length - 1));
+        if (nextIdx >= lastSwallowIdx) nextIdx++;
+        lastSwallowIdx = nextIdx;
+        return SWALLOW_MOTIFS[nextIdx];
       }
 
       function playSynthSe(kind) {
         var ctx = getSeCtx();
         if (!ctx) return;
         var now = ctx.currentTime;
+        var jitter = 0.97 + Math.random() * 0.06;
         if (kind === "dial") {
           // Soft 32ms Japanese hi-fi turntable detent / cardstock page-turn tick
           var osc = ctx.createOscillator();
           var g = ctx.createGain();
           var f = ctx.createBiquadFilter();
           osc.type = "triangle";
-          osc.frequency.setValueAtTime(440, now);
-          osc.frequency.exponentialRampToValueAtTime(185, now + 0.03);
+          osc.frequency.setValueAtTime(440 * jitter, now);
+          osc.frequency.exponentialRampToValueAtTime(185 * jitter, now + 0.03);
           f.type = "lowpass";
           f.frequency.setValueAtTime(1150, now);
           g.gain.setValueAtTime(0.0008, now);
@@ -2910,14 +2925,14 @@
           var o2 = ctx.createOscillator(), o2h = ctx.createOscillator();
           var g2 = ctx.createGain(), g2h = ctx.createGain();
           o2.type = "sine";
-          o2.frequency.setValueAtTime(520, now);
-          o2.frequency.exponentialRampToValueAtTime(780, now + 0.052);
+          o2.frequency.setValueAtTime(520 * jitter, now);
+          o2.frequency.exponentialRampToValueAtTime(780 * jitter, now + 0.052);
           g2.gain.setValueAtTime(0.0008, now);
           g2.gain.linearRampToValueAtTime(0.054, now + 0.007);
           g2.gain.exponentialRampToValueAtTime(0.0006, now + 0.064);
           o2h.type = "sine";
-          o2h.frequency.setValueAtTime(1040, now);
-          o2h.frequency.exponentialRampToValueAtTime(1560, now + 0.048);
+          o2h.frequency.setValueAtTime(1040 * jitter, now);
+          o2h.frequency.exponentialRampToValueAtTime(1560 * jitter, now + 0.048);
           g2h.gain.setValueAtTime(0.0004, now);
           g2h.gain.linearRampToValueAtTime(0.012, now + 0.006);
           g2h.gain.exponentialRampToValueAtTime(0.0004, now + 0.05);
@@ -2937,15 +2952,17 @@
           oc.connect(gc); gc.connect(ctx.destination);
           oc.start(now); oc.stop(now + 0.056);
         } else if (kind === "swallow") {
-          // Delicate two-note crystal windchime (C6 -> G6) with airy tail
-          [1046.5, 1568.0].forEach(function (freq, idx) {
+          // Unified delicate pentatonic two-note crystal windchime (consistent click 1..N, zero consecutive repeats)
+          var motif = nextSwallowMotif();
+          var peak = motif[2];
+          [motif[0], motif[1]].forEach(function (freq, idx) {
             var t = now + idx * 0.072;
             var o = ctx.createOscillator();
             var g = ctx.createGain();
             o.type = "sine";
             o.frequency.setValueAtTime(freq, t);
             g.gain.setValueAtTime(0.0006, t);
-            g.gain.linearRampToValueAtTime(0.05, t + 0.012);
+            g.gain.linearRampToValueAtTime(peak, t + 0.012);
             g.gain.exponentialRampToValueAtTime(0.0005, t + 0.34);
             o.connect(g); g.connect(ctx.destination);
             o.start(t); o.stop(t + 0.36);
@@ -2959,13 +2976,8 @@
         if (lastPlayed[kind] && (nowMs - lastPlayed[kind]) < SE_COOLDOWN_MS) return;
         lastPlayed[kind] = nowMs;
         seGen++;
-        // v1.3.12.6: SE go through WebAudio only (no <audio> elements) and the
-        // context is suspended right after each burst, so background music in
-        // other apps is not ducked by a lingering media session.
-        if (isHttp && SE_FILES[kind] && !seRealMissing[kind]) {
-          if (seBuffers[kind]) { playBufferSe(kind); return; }
-          ensureSeBuffer(kind);
-        }
+        // v1.3.12.6 / v1.4.17: SE run exclusively via unified WebAudio synthesis (no mid-session swap to MP3),
+        // suspending right after each burst so external BGM apps are never ducked.
         playSynthSe(kind);
         scheduleSeSuspend(500);
       };

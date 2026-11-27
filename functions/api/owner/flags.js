@@ -3,7 +3,7 @@
 import { getSession, sameOrigin, audit, json } from "./_shared.js";
 
 const KEY = "flags_v1";
-const ALLOWED_KEYS = ["show_upcoming_public", "hide_almanac", "show_data_health_badge", "external_youtube_only"];
+const ALLOWED_KEYS = ["hide_almanac", "external_youtube_only"];
 
 async function readFlags(env) {
   if (!env.PORTAL_STATE) return {};
