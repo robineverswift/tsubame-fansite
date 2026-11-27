@@ -27,6 +27,8 @@ Edit `subject.config.json` at the repository root:
 | `fonts` | Google Fonts families and the CSS font stacks for the public site and the console. |
 | `theme.tokens` / `adminTheme.tokens` | The colour palettes (CSS custom properties) of the public site and the console. |
 | `data` | Which platform adapter feeds the catalogue (see `docs/ADAPTERS.md`). |
+| `channels` | The official-channels directory: one entry per channel (platform label, icon key, name, trilingual description, optional tag, URL). |
+| `owner.creatorXUserId` | The artist's numeric X user ID — the owner console distinguishes the artist from the operator by it. |
 
 Then stamp the configuration into the sources:
 
@@ -36,6 +38,16 @@ node scripts/apply-subject.mjs
 
 Commit the result. `node scripts/apply-subject.mjs --check` fails if the
 sources and the configuration ever drift apart.
+
+The stamp covers the identity and declaration in `site-copy.json`, the theme
+tokens in `web.css` / `admin.css`, the brand asset paths, the font URLs in
+both Astro pages, the channel directory in `public/scripts/web-client.js`
+(regenerated from `channels` between the `subject:channels` markers — do not
+hand-edit that block), and the `CREATOR_UID` constant in the owner
+functions. Channel entries pick an icon from the built-in library in
+`web-client.js` (`site`, `x`, `x-notice`, `x-runa`, `cien`, `tsubamate`,
+`dlsite-mic`, `youtube`, `booth`, `skeb`, `tiktok`, `line`, `amazon`,
+`pommu`, `litlink`, `fantia`); an unknown key falls back to the site icon.
 
 ## 3. Feed it data
 
@@ -61,8 +73,12 @@ Replace it wholesale with your own output.
 The console at `/admin` signs the artist and the operator in with X OAuth 2.0
 (PKCE, read-only scopes). Create your own X developer app, register the
 callback `https://<your-domain>/api/owner/callback`, and set the app
-credentials as Cloudflare Pages secrets (see `.env.example`). Until then the
-public site works normally; the console simply cannot sign anyone in.
+credentials as Cloudflare Pages secrets (see `.env.example`). The artist's
+own numeric X user ID goes into `subject.config.json` as
+`owner.creatorXUserId` (step 2) — the stamp writes it into the owner
+functions for you; the operator's allowed IDs are part of the Pages secrets.
+Until then the public site works normally; the console simply cannot sign
+anyone in.
 
 ## 5. Deploy
 

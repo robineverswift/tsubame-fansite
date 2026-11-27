@@ -16,6 +16,11 @@
 //                                        --font-round/--font-num
 //   - src/pages/index.astro            : Google Fonts URL (fonts.webFamilies)
 //   - src/pages/admin.astro            : Google Fonts URL (fonts.adminFamilies)
+//   - public/scripts/web-client.js     : the LINKS channel directory, regenerated
+//                                        from cfg.channels between the
+//                                        subject:channels markers
+//   - functions/api/owner/me.js        : CREATOR_UID (owner.creatorXUserId)
+//   - functions/api/owner/message.js   : CREATOR_UID (owner.creatorXUserId)
 //
 // The script is idempotent: running it twice changes nothing the second time.
 import { readFileSync, writeFileSync } from "node:fs";
@@ -78,6 +83,32 @@ function stampAstro(text, families) {
 }
 stamp("src/pages/index.astro", (t) => stampAstro(t, cfg.fonts.webFamilies));
 stamp("src/pages/admin.astro", (t) => stampAstro(t, cfg.fonts.adminFamilies));
+
+// 4) Channel directory — regenerate the LINKS array between the markers.
+function channelsBlock(channels) {
+  const entries = channels.map((c) => {
+    const o = {};
+    for (const k of ["plat", "icon", "name", "ja", "cn", "en"]) o[k] = c[k];
+    if (c.tag) o.tag = { ja: c.tag.ja, cn: c.tag.cn, en: c.tag.en, tone: c.tag.tone };
+    o.url = c.url;
+    return JSON.stringify(o, null, 2).split("\n").map((l) => "      " + l).join("\n");
+  });
+  return "    var LINKS = [\n" + entries.join(",\n") + "\n    ];";
+}
+stamp("public/scripts/web-client.js", (t) => {
+  const S = "    /* subject:channels:start";
+  const E = "    /* subject:channels:end */";
+  const i = t.indexOf(S), j = t.indexOf(E);
+  if (i < 0 || j < 0) throw new Error("subject:channels markers not found in public/scripts/web-client.js");
+  const startLine = S + " — generated from subject.config.json (channels); do not hand-edit */\n";
+  return t.slice(0, i) + startLine + channelsBlock(cfg.channels) + "\n" + t.slice(j);
+});
+
+// 5) Owner console — the creator's X user ID constant.
+for (const f of ["functions/api/owner/me.js", "functions/api/owner/message.js"]) {
+  stamp(f, (t) => t.replace(/const CREATOR_UID = "[^"]*";/,
+    "const CREATOR_UID = \"" + cfg.owner.creatorXUserId + "\";"));
+}
 
 if (drift.length === 0) {
   console.log("apply-subject: all sources already match subject.config.json");

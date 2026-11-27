@@ -1,5 +1,6 @@
 {
   "configVersion": 1,
+  "_about": "The single configuration file for this framework. Edit it, then run node scripts/apply-subject.mjs to stamp the values into the sources. In the framework's own source repository this file ships with sample values.",
   "subject": {
     "name": {
       "ja": "柚木つばめ",
@@ -23,6 +24,9 @@
   "brand": {
     "adminIcon": "/assets/brand/placeholder-icon.png",
     "adminDashPuff": "/assets/brand/placeholder-puff.png"
+  },
+  "owner": {
+    "creatorXUserId": "YOUR_X_USER_ID"
   },
   "fonts": {
     "webFamilies": [
@@ -164,11 +168,6 @@
       "--th-rgb36": "16, 12, 7"
     }
   },
-  "data": {
-    "platform": "DLsite",
-    "syncScript": "scripts/sync-dlsite.mjs",
-    "worksFile": "public/data/works.json"
-  },
   "adminTheme": {
     "tokens": {
       "--th-c1": "#da8c03",
@@ -206,5 +205,60 @@
       "--th-rgb10": "31, 22, 12",
       "--th-rgb11": "44, 31, 15"
     }
-  }
+  },
+  "data": {
+    "platform": "DLsite",
+    "syncScript": "scripts/sync-dlsite.mjs",
+    "worksFile": "public/data/works.json"
+  },
+  "channels": [
+    {
+      "plat": "公式サイト",
+      "icon": "site",
+      "name": "[アーティスト名] オフィシャルサイト",
+      "ja": "example.com — 依頼窓口・お知らせ",
+      "cn": "example.com — 委托窗口与公告",
+      "en": "example.com — Inquiries & announcements",
+      "tag": {
+        "ja": "公式",
+        "cn": "官网",
+        "en": "Official",
+        "tone": "rose"
+      },
+      "url": "https://example.com/"
+    },
+    {
+      "plat": "X · メイン",
+      "icon": "x",
+      "name": "[アーティスト名]",
+      "ja": "@your_artist — 作品紹介・収録報告・日常ポスト",
+      "cn": "@your_artist — 作品介绍、收录动态与日常动态",
+      "en": "@your_artist — Releases, recording reports & daily posts",
+      "tag": {
+        "ja": "主アカウント",
+        "cn": "主账号",
+        "en": "Main",
+        "tone": "rose"
+      },
+      "url": "https://x.com/your_artist"
+    },
+    {
+      "plat": "YouTube",
+      "icon": "youtube",
+      "name": "[アーティスト名] 公式チャンネル",
+      "ja": "ライブ配信・オリジナルMV・開封動画・サンプル",
+      "cn": "官方直播、原创 MV、开箱与试听样本",
+      "en": "Streams, original MVs, unboxings & samples",
+      "url": "https://www.youtube.com/@your_artist"
+    },
+    {
+      "plat": "DLsite 出演一覧",
+      "icon": "dlsite-mic",
+      "name": "[アーティスト名] 出演作品",
+      "ja": "DLsite 公式声優検索ページ（DLsite掲載分）",
+      "cn": "DLsite 官方声优搜索页（DLsite 收录部分）",
+      "en": "Official DLsite voice-actor search page (DLsite listings)",
+      "url": "https://www.dlsite.com/"
+    }
+  ]
 }

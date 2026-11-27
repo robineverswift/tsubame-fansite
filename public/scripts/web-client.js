@@ -747,42 +747,58 @@
     })();
 
     /* ---------- Official Links (12 Cards) ---------- */
+    /* subject:channels:start — generated from subject.config.json (channels); do not hand-edit */
     var LINKS = [
       {
-        plat: "公式サイト", icon: "site",
-        name: "[アーティスト名] オフィシャルサイト",
-        ja: "example.com — 依頼窓口・お知らせ",
-        cn: "example.com — 委托窗口与公告",
-        en: "example.com — Inquiries & announcements",
-        tag: { ja: "公式", cn: "官网", en: "Official", tone: "rose" },
-        url: "https://example.com/"
+        "plat": "公式サイト",
+        "icon": "site",
+        "name": "[アーティスト名] オフィシャルサイト",
+        "ja": "example.com — 依頼窓口・お知らせ",
+        "cn": "example.com — 委托窗口与公告",
+        "en": "example.com — Inquiries & announcements",
+        "tag": {
+          "ja": "公式",
+          "cn": "官网",
+          "en": "Official",
+          "tone": "rose"
+        },
+        "url": "https://example.com/"
       },
       {
-        plat: "X · メイン", icon: "x",
-        name: "[アーティスト名]",
-        ja: "@your_artist — 作品紹介・収録報告・日常ポスト",
-        cn: "@your_artist — 作品介绍、收录动态与日常动态",
-        en: "@your_artist — Releases, recording reports & daily posts",
-        tag: { ja: "主アカウント", cn: "主账号", en: "Main", tone: "rose" },
-        url: "https://x.com/your_artist"
+        "plat": "X · メイン",
+        "icon": "x",
+        "name": "[アーティスト名]",
+        "ja": "@your_artist — 作品紹介・収録報告・日常ポスト",
+        "cn": "@your_artist — 作品介绍、收录动态与日常动态",
+        "en": "@your_artist — Releases, recording reports & daily posts",
+        "tag": {
+          "ja": "主アカウント",
+          "cn": "主账号",
+          "en": "Main",
+          "tone": "rose"
+        },
+        "url": "https://x.com/your_artist"
       },
       {
-        plat: "YouTube", icon: "youtube",
-        name: "[アーティスト名] 公式チャンネル",
-        ja: "ライブ配信・オリジナルMV・開封動画・サンプル",
-        cn: "官方直播、原创 MV、开箱与试听样本",
-        en: "Streams, original MVs, unboxings & samples",
-        url: "https://www.youtube.com/@your_artist"
+        "plat": "YouTube",
+        "icon": "youtube",
+        "name": "[アーティスト名] 公式チャンネル",
+        "ja": "ライブ配信・オリジナルMV・開封動画・サンプル",
+        "cn": "官方直播、原创 MV、开箱与试听样本",
+        "en": "Streams, original MVs, unboxings & samples",
+        "url": "https://www.youtube.com/@your_artist"
       },
       {
-        plat: "DLsite 出演一覧", icon: "dlsite-mic",
-        name: "[アーティスト名] 出演作品",
-        ja: "DLsite 公式声優検索ページ（DLsite掲載分）",
-        cn: "DLsite 官方声优搜索页（DLsite 收录部分）",
-        en: "Official DLsite voice-actor search page (DLsite listings)",
-        url: "https://www.dlsite.com/"
+        "plat": "DLsite 出演一覧",
+        "icon": "dlsite-mic",
+        "name": "[アーティスト名] 出演作品",
+        "ja": "DLsite 公式声優検索ページ（DLsite掲載分）",
+        "cn": "DLsite 官方声优搜索页（DLsite 收录部分）",
+        "en": "Official DLsite voice-actor search page (DLsite listings)",
+        "url": "https://www.dlsite.com/"
       }
     ];
+    /* subject:channels:end */
 
     // v2.3.2 Tsubame Portal HD Squircle Icon Pack (full-bleed 48x48 geometricPrecision artboards + bespoke Official Site & Tsubamate Circle crests)
     var LINK_ICONS = {
