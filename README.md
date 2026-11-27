@@ -15,6 +15,17 @@ affiliated with the artist or any related organization.
 **Live instance:** [yuzukitsubame.com](https://yuzukitsubame.com) — the original
 TSUBAME RECORD, running this framework with the full catalogue.
 
+## Use it for your own artist
+
+The framework is configured through a single file, `subject.config.json`
+(identity, palettes, fonts, brand assets), and fed by a replaceable data
+adapter — DLsite ships as the reference adapter; other platforms plug in
+behind the same contract. It is built for fans of individual creators:
+voice actors, VTubers, and other independent artists.
+
+- [docs/QUICKSTART.md](docs/QUICKSTART.md) — from fork to a deployed archive.
+- [docs/ADAPTERS.md](docs/ADAPTERS.md) — the catalogue data contract.
+
 ## What is included
 
 - **Public site** (Astro, trilingual ja / cn / en): works archive with search,
