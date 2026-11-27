@@ -77,13 +77,29 @@ the free 10,000/day. Mapping notes: `metric` is the view count,
 that has not started yet lands in `upcoming.json` and promotes itself once
 it goes live. Without `--write` the sync is a dry run.
 
+`scripts/sync-booth.mjs` implements it for BOOTH (a creator's shop), from
+the shop's public pages — BOOTH has no public API:
+
+```sh
+BOOTH_SHOP=yuzuki-tsubame node scripts/sync-booth.mjs --write
+```
+
+`BOOTH_SHOP` is the shop subdomain (`https://<shop>.booth.pm`). Mapping
+notes: `price` is the listed minimum price in JPY, `metric` is `0` (BOOTH
+exposes no public sales count), `date` is the item's publication date
+（商品公開日時）, `type` is the item's category, `age` is `2` when the item
+carries BOOTH's adult label, and `upcoming.json` is always empty (BOOTH
+lists pre-orders as normal products). Two operational notes: BOOTH sits
+behind a bot check, so run the sync from a normal connection — if your
+network is challenged, copy your browser's Cookie header into
+`BOOTH_COOKIE`; and adult items sit behind an 18+ confirmation, which the
+same cookie (set after confirming once in your browser) unlocks. The sync
+aborts without writing if every item fetch fails or is gated.
+
 ## Writing an adapter for another platform
 
 The audiences this framework is built for live mostly on a few platforms:
 
-- **BOOTH** (doujin goods by fellow creators) — products map naturally:
-  price is real, `metric` is usually unavailable → use `0` and let rating
-  columns stay `null` / `0`.
 - **Ci-en / Fantia** (creator posts) — posts can be catalogued the same way,
   with the post date as `date` and no price/metric.
 
