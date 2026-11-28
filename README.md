@@ -106,6 +106,9 @@ information taken from public DLsite pages; all rights in the works, titles
 and names belong to their respective holders. If you are a rights holder and
 want the demo data changed or removed, please open an issue.
 
+Third-party trademarks, creator names, artwork and catalogue metadata are
+not covered by the MIT License — see `NOTICE.md`.
+
 ## License
 
 MIT
